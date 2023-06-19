@@ -12,6 +12,10 @@
 #include "Branch.h"
 #include "Tree.h"
 #include "Player.h"
+#include "Title.h"
+#include "GameMode.h"
+#include "SelectCharacter.h"
+#include "PlayGame.h"
 
 using namespace std;
 
@@ -159,6 +163,12 @@ int main()
         obj->Init();
     }
 
+    Title title(SceneType::Title);
+    title.Init();
+
+    GameMode gameMode(SceneType::GameMode);
+    gameMode.Init();
+
     //tree->UpdateBranches();
     //std::vector<sf::Vector2f> branchPosVec(branches.size());
     //float x = tree->GetPosition().x;
@@ -175,7 +185,7 @@ int main()
     //int currentBranchIndex = -1;
     //UpdateBranches(branches, currentBranchIndex, branchPosVec);
 
-
+    
 
     sf::RenderWindow window(sf::VideoMode(screenWidth , screenHeight), "Timber!", sf::Style::Default);
 
@@ -304,7 +314,8 @@ int main()
             window.draw(textMessage);
             window.draw(textBestScore);
         }
-
+        //title.Draw(window);
+        //gameMode.Draw(window);
         window.display();   // 화면 출력
     }
 

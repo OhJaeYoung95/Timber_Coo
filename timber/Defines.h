@@ -1,4 +1,13 @@
 #pragma once
+
+enum class SceneType
+{
+	Title,
+	GameMode,
+	Select,
+	Play
+};
+
 enum class Sides
 {
 	Left,
