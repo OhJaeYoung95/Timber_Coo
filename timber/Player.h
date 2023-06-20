@@ -49,12 +49,13 @@ public:
 
 	void SetTree(Tree* tree);
 	void SetSide(Sides side);
+	void SetWho(int who);
 	Sides GetSide() const;
 
 	void Chop(Sides side);
 	void Die(bool isTimeOut);
 
-	//bool IsAlive();
+	bool IsAlive();
 	//bool CheckCollide();
 
 	virtual void SetPosition(float x, float y);

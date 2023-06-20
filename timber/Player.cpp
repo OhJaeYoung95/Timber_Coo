@@ -28,7 +28,7 @@ Player::Player(sf::Texture& tex, sf::Vector2f spriteDir, const std::string& n, c
 	soundDeath.setBuffer(soundBufferDeath);
 	soundOutOfTime.setBuffer(soundBufferDeath);
 
-
+	who = 1;
 }
 
 Player::~Player()
@@ -57,6 +57,11 @@ void Player::SetSide(Sides side)
 	//axePositions[(int)Sides::Right] = sf::Vector2f(this->GetPosition().x + axeOffsetX, this->GetPosition().y - axeOffsetY);
 	//axe->SetPosition(axePositions[(int)this->side]);
 	//axe->SetFlipX(this->side != Sides::Right);
+}
+
+void Player::SetWho(int who)
+{
+	this->who = who;
 }
 
 Sides Player::GetSide() const
@@ -89,10 +94,10 @@ void Player::Die(bool isTimeOut)
 		soundDeath.play();
 }
 
-//bool Player::IsAlive()
-//{
-//	return isAlive;
-//}
+bool Player::IsAlive()
+{
+	return isAlive;
+}
 //
 //bool Player::CheckCollide()
 //{
@@ -161,48 +166,69 @@ void Player::Update(float dt)
 		return;
 	if (!isChopping)
 	{
-
-		if (InputMgr2::GetKeyDown(sf::Keyboard::Left))
+		if (who == 1)
 		{
-			tree->UpdateBranches();
-			tree->GetCurrentint();
-			Chop(Sides::Left);
+			if (InputMgr2::GetKeyDown(sf::Keyboard::Left))
+			{
+				tree->UpdateBranches();
+				tree->GetCurrentint();
+				Chop(Sides::Left);
+			}
+
+			if (InputMgr2::GetKeyDown(sf::Keyboard::Right))
+			{
+				tree->UpdateBranches();
+				tree->GetCurrentint();
+				Chop(Sides::Right);
+			}		
 		}
+		else if (who == 2)
+		{
+			if (InputMgr2::GetKeyDown(sf::Keyboard::A))
+			{
+				tree->UpdateBranches();
+				tree->GetCurrentint();
+				Chop(Sides::Left);
+			}
 
-		if (InputMgr2::GetKeyDown(sf::Keyboard::Right))
-		{
-			tree->UpdateBranches();
-			tree->GetCurrentint();
-			Chop(Sides::Right);
-		}		
-		
-		if (InputMgr2::GetKeyDown(sf::Keyboard::A))
-		{
-			tree->UpdateBranches();
-			tree->GetCurrentint();
-			Chop(Sides::Left);
+			if (InputMgr2::GetKeyDown(sf::Keyboard::D))
+			{
+				tree->UpdateBranches();
+				tree->GetCurrentint();
+				Chop(Sides::Right);
+			}
 		}
-
-		if (InputMgr2::GetKeyDown(sf::Keyboard::D))
-		{
-			tree->UpdateBranches();
-			tree->GetCurrentint();
-			Chop(Sides::Right);
-		}
-
 	}
 	else
 	{
-		if (GetSide() == Sides::Left && 
-			InputMgr2::GetKeyUp(sf::Keyboard::Left))
+		if (who == 1)
 		{
-			isChopping = false;
-		}
+			if (GetSide() == Sides::Left && 
+				InputMgr2::GetKeyUp(sf::Keyboard::Left))
+			{
+				isChopping = false;
+			}
 
-		if (GetSide() == Sides::Right && 
-			InputMgr2::GetKeyUp(sf::Keyboard::Right))
+			if (GetSide() == Sides::Right && 
+				InputMgr2::GetKeyUp(sf::Keyboard::Right))
+			{
+				isChopping = false;
+			}
+		}
+		else if (who == 2)
 		{
-			isChopping = false;
+			if (GetSide() == Sides::Left &&
+				InputMgr2::GetKeyUp(sf::Keyboard::A))
+			{
+				isChopping = false;
+			}
+
+			if (GetSide() == Sides::Right &&
+				InputMgr2::GetKeyUp(sf::Keyboard::D))
+			{
+				isChopping = false;
+			}
+
 		}
 
 	}

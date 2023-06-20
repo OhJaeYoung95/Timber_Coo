@@ -58,75 +58,78 @@ PlayGame::~PlayGame()
 
 void PlayGame::Init(ModeSelect mode)
 {
-    isPause = true;
-    isStart = false;
-    isTimeOut = false;
-    score1 = 0;
-    score2 = 0;
-    bestScore = 0;
-    screenWidth = 1920;
-    screenHeight = 1080;
-    duration = 6.f;
-    timer1 = duration;
-    uiTimerWidth = 400.f;
-    uiTimerheight = 80.f;
-    dt = clock.restart();
-    deltaTime = dt.asSeconds();
+    {
+        isPause = true;
+        isStart = false;
+        isTimeOut = false;
+        score1 = 0;
+        score2 = 0;
+        bestScore = 0;
+        screenWidth = 1920;
+        screenHeight = 1080;
+        duration = 6.f;
+        timer1 = duration;
+        uiTimerWidth = 400.f;
+        uiTimerheight = 80.f;
+        dt = clock.restart();
+        deltaTime = dt.asSeconds();
 
-    // 중앙 메시지 : String, Color 모드 개별화
-    textMessage.setFont(font);
-    textMessage.setString("PRESS ENTER TO START!");
-    textMessage.setCharacterSize(75);
-    textMessage.setFillColor(sf::Color::White);
-    Utils::SetOrigin(textMessage, Origins::MC);
-    textMessage.setPosition(screenWidth / 2.f, screenHeight / 2.f);
+        // 중앙 메시지 : String, Color 모드 개별화
+        textMessage.setFont(font);
+        textMessage.setString("PRESS ENTER TO START!");
+        textMessage.setCharacterSize(75);
+        textMessage.setFillColor(sf::Color::White);
+        Utils::SetOrigin(textMessage, Origins::MC);
+        textMessage.setPosition(screenWidth / 2.f, screenHeight / 2.f);
 
-    // 스코어 : String, Size, Color, Origin, Position 모드 개별화
-    textScore1.setFont(font);
-    textScore1.setString("Score: ???");
-    textScore1.setCharacterSize(100);
-    textScore1.setFillColor(sf::Color::White);
-    Utils::SetOrigin(textScore1, Origins::TL);
-    textScore1.setPosition(20.f, 20.f);
+        // 스코어1 : String, Size, Color, Origin, Position 모드 개별화
+        textScore1.setFont(font);
+        textScore1.setString("Score: ???");
+        textScore1.setCharacterSize(100);
+        textScore1.setFillColor(sf::Color::White);
+        Utils::SetOrigin(textScore1, Origins::TR);
+        textScore1.setPosition(1900.f, 20.f);
 
-    // 스코어2
-    textScore2.setFont(font);
-    textScore2.setString("Score: ???");
-    textScore2.setCharacterSize(100);
-    textScore2.setFillColor(sf::Color::White);
-    Utils::SetOrigin(textScore2, Origins::TR);
-    textScore2.setPosition(1900.f, 20.f);
+        // 스코어2
+        textScore2.setFont(font);
+        textScore2.setString("Score: ???");
+        textScore2.setCharacterSize(100);
+        textScore2.setFillColor(sf::Color::White);
+        Utils::SetOrigin(textScore2, Origins::TL);
+        textScore2.setPosition(20.f, 20.f);
 
-    // 베스트 스코어 : String, Size, Color, Origin, Position 모드 개별화
-    textBestScore.setFont(font);
-    textBestScore.setString("Score: ???");
-    textBestScore.setCharacterSize(100);
-    textBestScore.setFillColor(sf::Color::White);
-    Utils::SetOrigin(textBestScore, Origins::MC);
-    textBestScore.setPosition(screenWidth / 2.f, screenHeight / 2.f - 100.f);
+        // 베스트 스코어 : String, Size, Color, Origin, Position 모드 개별화
+        textBestScore.setFont(font);
+        textBestScore.setString("Score: ???");
+        textBestScore.setCharacterSize(100);
+        textBestScore.setFillColor(sf::Color::White);
+        Utils::SetOrigin(textBestScore, Origins::MC);
+        textBestScore.setPosition(screenWidth / 2.f, screenHeight / 2.f - 100.f);
 
-    // 타이머 : Size, Origin, Position 모드 개별화
-    uiTimer1.setSize(sf::Vector2f(uiTimerWidth, uiTimerheight));
-    uiTimer1.setFillColor(sf::Color::Red);
-    Utils::SetOrigin(uiTimer1, Origins::BC);
-    uiTimer1.setPosition(screenWidth * 0.5f, screenHeight - 50.f);
+        // 타이머1 : Size, Origin, Position 모드 개별화
+        uiTimer1.setSize(sf::Vector2f(uiTimerWidth, uiTimerheight));
+        uiTimer1.setFillColor(sf::Color::Red);
+        Utils::SetOrigin(uiTimer1, Origins::BC);
+        uiTimer1.setPosition(screenWidth * 0.5f, screenHeight - 50.f);
 
-    uiTimer2.setSize(sf::Vector2f(uiTimerWidth, uiTimerheight));
-    uiTimer2.setFillColor(sf::Color::Red);
-    Utils::SetOrigin(uiTimer2, Origins::BC);
-    uiTimer2.setPosition(screenWidth / 4.f * 3.f, screenHeight - 50.f);
+        // 타이머2
+        uiTimer2.setSize(sf::Vector2f(uiTimerWidth, uiTimerheight));
+        uiTimer2.setFillColor(sf::Color::Red);
+        Utils::SetOrigin(uiTimer2, Origins::BC);
+        uiTimer2.setPosition(screenWidth / 4.f, screenHeight - 50.f);
 
-    // 타이머 프레임 : Size, Origin, Position 모드 개별화
-    uiTimerFrame1.setSize(sf::Vector2f(uiTimerWidth, uiTimerheight));
-    uiTimerFrame1.setFillColor(sf::Color::White);
-    Utils::SetOrigin(uiTimerFrame1, Origins::BC);
-    uiTimerFrame1.setPosition(screenWidth * 0.5f, screenHeight - 50.f);
+        // 타이머 프레임1 : Size, Origin, Position 모드 개별화
+        uiTimerFrame1.setSize(sf::Vector2f(uiTimerWidth, uiTimerheight));
+        uiTimerFrame1.setFillColor(sf::Color::White);
+        Utils::SetOrigin(uiTimerFrame1, Origins::BC);
+        uiTimerFrame1.setPosition(screenWidth * 0.5f, screenHeight - 50.f);
 
-    uiTimerFrame2.setSize(sf::Vector2f(uiTimerWidth, uiTimerheight));
-    uiTimerFrame2.setFillColor(sf::Color::White);
-    Utils::SetOrigin(uiTimerFrame2, Origins::BC);
-    uiTimerFrame2.setPosition(screenWidth / 4.f * 3.f, screenHeight - 50.f);
-
+        // 타이머 프레임2
+        uiTimerFrame2.setSize(sf::Vector2f(uiTimerWidth, uiTimerheight));
+        uiTimerFrame2.setFillColor(sf::Color::White);
+        Utils::SetOrigin(uiTimerFrame2, Origins::BC);
+        uiTimerFrame2.setPosition(screenWidth / 4.f, screenHeight - 50.f);
+    }
 
     dt = clock.restart();
     deltaTime = dt.asSeconds();
@@ -145,20 +148,18 @@ void PlayGame::Init(ModeSelect mode)
     {
         it->Init();
     }
+    player[0]->SetWho(1);
+    player[1]->SetWho(2);
     
     if (mode == ModeSelect::Multi)
         {
-            // tree 위치, 사이즈 변경
-            tree[0]->SetSize(0.5f, 1.f);
-            tree[0]->SetPosition(screenWidth / 4.f, 0.f);
-            tree[1]->SetSize(0.5f, 1.f);
-            tree[1]->SetPosition(screenWidth / 4.f * 3.f, 0.f);
+            // tree 위치
+            tree[0]->SetPosition(screenWidth / 4.f*3.f, 0.f);
+            tree[1]->SetPosition(screenWidth / 4.f, 0.f);
 
             // uiTimer1 위치
-            uiTimer1.setPosition(screenWidth / 4.f * 1.f, screenHeight - 50.f);
-
-            // uiTimer1 위치
-            uiTimerFrame1.setPosition(screenWidth / 4.f * 1.f, screenHeight - 50.f);
+            uiTimer1.setPosition(screenWidth / 4.f * 3.f, screenHeight - 50.f);
+            uiTimerFrame1.setPosition(screenWidth / 4.f * 3.f, screenHeight - 50.f);
         }
 }
 
@@ -196,6 +197,7 @@ void PlayGame::SoloPlay()
             timer1 -= deltaTime;
             if (timer1 <= 0.f)
             {
+                timer1 = 0;
                 textMessage.setString("OUT OF TIME");
                 isPause = true;
                 isTimeOut = true;
@@ -305,6 +307,7 @@ void PlayGame::MultiPlay()
             timer2 -= deltaTime;
             if (timer1 <= 0.f)
             {
+                timer1 = 0;
                 textMessage.setCharacterSize(40);
                 textMessage.setPosition(screenWidth / 4.f, screenHeight / 2.f);
                 textMessage.setString("OUT OF TIME");
@@ -315,6 +318,7 @@ void PlayGame::MultiPlay()
             }
             if (timer2 <= 0.f)
             {
+                timer2 = 0;
                 textMessage.setCharacterSize(40);
                 textMessage.setPosition(screenWidth / 4.f*3.f, screenHeight / 2.f);
                 textMessage.setString("OUT OF TIME");
@@ -325,10 +329,10 @@ void PlayGame::MultiPlay()
             }
             if(timer1 <= 0.f && timer2 <= 0.f)
             {
+                isPause = true;
                 std::stringstream ss1;
                 ss1 << "BEST SCORE: " << bestScore;
                 textBestScore.setString(ss1.str());
-                isPause = true;
                 isTimeOut = true;
             }
             else // 타임아웃 아닐 때
@@ -347,17 +351,17 @@ void PlayGame::MultiPlay()
                     if (score2 > bestScore)
                         bestScore = score2;
                 }
-                if (player[0]->GetSide() == tree[0]->GetCurrentSide() && player[1]->GetSide() == tree[1]->GetCurrentSide())
+                if (player[0]->IsAlive() == false && player[1]->IsAlive() == false)
                 {
+                    isPause = true;
                     textMessage.setCharacterSize(75);
                     textMessage.setPosition(screenWidth / 2.f, screenHeight / 2.f);
                     textMessage.setString("Game Over");
-                    isPause = true;
                     std::stringstream ss1;
                     ss1 << "BEST SCORE: " << bestScore;
                     textBestScore.setString(ss1.str());
                 }
-                else
+                else // 충돌 아닐 때
                 {
                     if ((InputMgr2::GetKeyDown(sf::Keyboard::Left) ||
                         InputMgr2::GetKeyDown(sf::Keyboard::Right)) && timer1 <= 5.8f)
@@ -387,6 +391,16 @@ void PlayGame::MultiPlay()
                     for (auto& obj : gameObjects)
                     {
                         obj->Update(deltaTime);
+                    }
+
+                    for (auto& it : tree)
+                    {
+                        it->Update(deltaTime);
+                    }
+
+                    for (auto& it : player)
+                    {
+                        it->Update(deltaTime);
                     }
 
                     std::stringstream ss1;
@@ -434,7 +448,6 @@ void PlayGame::Draw(ModeSelect mode)
     // 솔로
     if (mode == ModeSelect::Solo)
     {
-        
         tree[0]->Draw(window);
         player[0]->Draw(window);
         window.draw(textScore1);
@@ -447,8 +460,8 @@ void PlayGame::Draw(ModeSelect mode)
     {
         for (int i = 0; i < 2; i++)
         {
-            tree[0]->Draw(window);
-            player[0]->Draw(window);
+            tree[i]->Draw(window);
+            player[i]->Draw(window);
         }
 
         window.draw(textScore1);
