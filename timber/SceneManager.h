@@ -20,6 +20,9 @@ private:
 	std::vector<Scene*> scene;
 	SceneType currentScene;
 
+	int modeIndex;		// 1인용 2인용, SelectCharacter 의 playerTurn에도 적용
+	int characterIndex;
+
 public:
 	SceneManager();
 	~SceneManager();
@@ -30,5 +33,10 @@ public:
 	void Draw(sf::RenderWindow& window);
 
 	void SetScene(SceneType type);
+
+	int GetModeIndex();
+	void SetModeIndex(int index);
+	int GetCharacterIndex();
+	void SetCharacterIndex(int index);
 };
 

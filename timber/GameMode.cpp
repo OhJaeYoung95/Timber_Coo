@@ -1,7 +1,7 @@
 #include "GameMode.h"
 #include "InputMgr2.h"
 
-GameMode::GameMode(SceneType _type) : Scene(_type), slotIndex(0)
+GameMode::GameMode(SceneType _type) : Scene(_type), modeIndex(0)
 {
 	bgTex.loadFromFile("graphics/back1.png");
 	SetTexture(bg, bgTex);
@@ -23,7 +23,7 @@ GameMode::~GameMode()
 
 void GameMode::Init()
 {
-	slotIndex = 0;
+	modeIndex = 0;
 
 	// 게임모드 이미지
 	Utils::SetOrigin(modeForOne, Origins::MC);
@@ -59,13 +59,15 @@ void GameMode::Release()
 void GameMode::Update(float dt, SceneManager& sceneM)
 {
 	Blink(dt);
-	if (InputMgr2::GetKeyDown(sf::Keyboard::Left) && slotIndex >=1)
+	if (InputMgr2::GetKeyDown(sf::Keyboard::Left) && modeIndex >=1)
 	{
-		slotIndex--;
+		modeIndex--;
+		sceneM.SetModeIndex(modeIndex);
 	}
-	if (InputMgr2::GetKeyDown(sf::Keyboard::Right) && slotIndex <= 0)
+	if (InputMgr2::GetKeyDown(sf::Keyboard::Right) && modeIndex <= 0)
 	{
-		slotIndex++;
+		modeIndex++;
+		sceneM.SetModeIndex(modeIndex);
 	}
 
 	if (InputMgr2::GetKeyDown(sf::Keyboard::Return))
@@ -79,7 +81,7 @@ void GameMode::Draw(sf::RenderWindow& window)
 	window.draw(bg);
 	window.draw(modeForOne);
 	window.draw(modeForTwo);
-	if (slotIndex == 0)
+	if (modeIndex == 0)
 	{
 		if(blinkTimer > 0)
 			window.draw(text1);
@@ -91,7 +93,7 @@ void GameMode::Draw(sf::RenderWindow& window)
 	}
 }
 
-int GameMode::GetSlotIndex()
+int GameMode::GetModeIndex()
 {
-	return slotIndex;
+	return modeIndex;
 }

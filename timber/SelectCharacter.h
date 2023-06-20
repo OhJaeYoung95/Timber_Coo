@@ -31,7 +31,7 @@ private:
 	sf::Text playerTurnText;
 
 	int playerTurn;		// 0 일때 플레이어1, 1일때 플레이어2
-	int slotIndex;		// 0 일때 왼쪽 , 1일때 오른쪽
+	int characterIndex;		// 0 일때 왼쪽 , 1일때 오른쪽
 
 public:
 	SelectCharacter(SceneType _type);
@@ -42,5 +42,5 @@ public:
 	virtual void Update(float dt, SceneManager& sceneM) override;
 	virtual void Draw(sf::RenderWindow& window) override;
 
-	void SetSlotIndex(int index);
+	void SetCharacterIndex(int index);
 };

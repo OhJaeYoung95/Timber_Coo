@@ -7,7 +7,8 @@ class GameObject;
 class PlayGame : public Scene
 {
 private:
-	int slotIndex;
+	int modeIndex;
+	int characterIndex;
 
 public:
 	PlayGame(SceneType _type);
@@ -17,6 +18,4 @@ public:
 	virtual void Release() override;
 	virtual void Update(float dt, SceneManager& sceneM) override;
 	virtual void Draw(sf::RenderWindow& window) override;
-
-	void SetSlotIndex(int index);
 };

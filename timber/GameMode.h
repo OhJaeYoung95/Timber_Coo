@@ -21,7 +21,7 @@ private:
 	sf::Text text1;
 	sf::Text text2;
 
-	int slotIndex;
+	int modeIndex;
 
 public:
 	GameMode(SceneType _type);
@@ -32,6 +32,6 @@ public:
 	virtual void Update(float dt, SceneManager& sceneM) override;
 	virtual void Draw(sf::RenderWindow& window) override;
 
-	int GetSlotIndex();
+	int GetModeIndex();
 };
 

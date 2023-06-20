@@ -3,7 +3,8 @@
 #include "InputMgr2.h"
 #include "Utils.h"
 
-SelectCharacter::SelectCharacter(SceneType _type) : Scene(_type) , playerTurn(0), slotIndex(1)
+SelectCharacter::SelectCharacter(SceneType _type) 
+	: Scene(_type) , playerTurn(0), characterIndex(1)
 {
 	bgTex.loadFromFile("graphics/back2.png");
 	SetTexture(bg, bgTex);
@@ -38,7 +39,7 @@ SelectCharacter::~SelectCharacter()
 void SelectCharacter::Init()
 {
 	playerTurn = 0;
-	slotIndex = 0;
+	characterIndex = 0;
 
 	// 텍스트
 	playerTurnText.setFont(font);
@@ -80,20 +81,22 @@ void SelectCharacter::Release()
 void SelectCharacter::Update(float dt, SceneManager& sceneM)
 {
 	Blink(dt);
-	if (InputMgr2::GetKeyDown(sf::Keyboard::Left) && slotIndex >= 1)
+	if (InputMgr2::GetKeyDown(sf::Keyboard::Left) && characterIndex >= 1)
 	{
-		slotIndex--;
+		characterIndex--;
+		sceneM.SetCharacterIndex(characterIndex);
 	}
-	if (InputMgr2::GetKeyDown(sf::Keyboard::Right) && slotIndex <= 0)
+	if (InputMgr2::GetKeyDown(sf::Keyboard::Right) && characterIndex <= 0)
 	{
-		slotIndex++;
+		characterIndex++;
+		sceneM.SetCharacterIndex(characterIndex);
 	}
 
 
 	// 테스트 코드
 	if (InputMgr2::GetKeyDown(sf::Keyboard::Enter) && playerTurn < 1)
 	{
-		slotIndex = 0;
+		characterIndex = 0;
 		playerTurn = playerTurn + 1;
 		InputMgr2::ClearInput();
 	}
@@ -130,7 +133,7 @@ void SelectCharacter::Draw(sf::RenderWindow& window)
 	window.draw(c2);
 	window.draw(playerTurnText);
 
-	if (slotIndex == 0)
+	if (characterIndex == 0)
 	{
 		if(blinkTimer > 0)
 			window.draw(c1Cursor);
@@ -142,7 +145,7 @@ void SelectCharacter::Draw(sf::RenderWindow& window)
 	}
 }
 
-void SelectCharacter::SetSlotIndex(int index)
+void SelectCharacter::SetCharacterIndex(int index)
 {
-	slotIndex = index;
+	characterIndex = index;
 }

@@ -15,8 +15,6 @@ Title::~Title()
 
 void Title::Init()
 {
-	type = SceneType::Title;
-
 	// 타이틀 이미지
 	title.setPosition(0.f, 0.f);
 	title.setScale(1.f, 1.f);
@@ -29,14 +27,13 @@ void Title::Init()
 	text.setFillColor(sf::Color::White);
 	Utils::SetOrigin(text, Origins::MC);
 	text.setPosition(1920.f / 2.f, 1080.f / 2.f + 300.f);
-
 }
 
 void Title::Release()
 {
 }
 
-void Title::Update(float dt, SceneManager& sceneM)
+void Title::Update(float dt, SceneManager& sceneM)	// 여기서 
 {
 	Blink(dt);
 	if (InputMgr2::GetKeyDown(sf::Keyboard::Return))
@@ -57,5 +54,5 @@ void Title::Draw(sf::RenderWindow& window)
 
 void Title::SetTexture(sf::Texture& tex)
 {
-	title.setTexture(tex);
+	title.setTexture(tex); 
 }

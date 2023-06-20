@@ -5,7 +5,7 @@
 #include "PlayGame.h"
 
 SceneManager::SceneManager() 
-	: currentScene(SceneType::Title)
+	: currentScene(SceneType::Title), modeIndex(0), characterIndex(0)
 {
 	scene.push_back(new Title(SceneType::Title));
 	scene.push_back(new GameMode(SceneType::GameMode));
@@ -23,6 +23,8 @@ SceneManager::~SceneManager()
 
 void SceneManager::Init()
 {
+	modeIndex = 0;
+	characterIndex = 0;
 	for (auto& it : scene)
 	{
 		it->Init();
@@ -51,4 +53,24 @@ void SceneManager::SetScene(SceneType type)
 {
 	currentScene = type;
 	scene[(int)currentScene]->Init();
+}
+
+int SceneManager::GetModeIndex()
+{
+	return modeIndex;
+}
+
+void SceneManager::SetModeIndex(int index)
+{
+	modeIndex = index;
+}
+
+int SceneManager::GetCharacterIndex()
+{
+	return characterIndex;
+}
+
+void SceneManager::SetCharacterIndex(int index)
+{
+	characterIndex = index;
 }
