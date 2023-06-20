@@ -1,6 +1,9 @@
 #pragma once
 #include "Scene.h"
 #include "Utils.h"
+
+class SceneManager;
+
 class GameMode : public Scene
 {
 private:
@@ -14,16 +17,17 @@ private:
 	sf::Text text1;
 	sf::Text text2;
 
+	int slotIndex;
+
 public:
 	GameMode(SceneType _type);
 	virtual ~GameMode() override;
 
 	virtual void Init() override;
 	virtual void Release() override;
-	virtual void Update(float dt) override;
+	virtual void Update(float dt, SceneManager& sceneM) override;
 	virtual void Draw(sf::RenderWindow& window) override;
 
-	void SetTexture(sf::Sprite& sprite, sf::Texture& tex);
-
+	int GetSlotIndex();
 };
 

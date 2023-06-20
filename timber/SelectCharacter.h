@@ -1,9 +1,34 @@
 #pragma once
 #include "Scene.h"
 
+class SceneManager;
+
 class SelectCharacter : public Scene
 {
 private:
+	// 캐릭터 이미지
+	sf::Texture c1Tex;
+	sf::Sprite c1;
+	sf::Texture c2Tex;
+	sf::Sprite c2;
+
+	// 캐릭터 프레임
+	sf::Texture frameTex;
+	sf::Sprite frame1;
+	sf::Sprite frame2;
+
+	// 커서 이미지
+	sf::Texture c1CursorTex;
+	sf::Sprite c1Cursor;
+	sf::Texture c2CursorTex;
+	sf::Sprite c2Cursor;
+
+	// 캐릭터 차례
+	sf::Font font;
+	sf::Text playerTurnText;
+
+	int playerTurn;		// 0 일때 플레이어1, 1일때 플레이어2
+	int slotIndex;		// 0 일때 왼쪽 , 1일때 오른쪽
 
 public:
 	SelectCharacter(SceneType _type);
@@ -11,7 +36,8 @@ public:
 
 	virtual void Init() override;
 	virtual void Release() override;
-	virtual void Update(float dt) override;
+	virtual void Update(float dt, SceneManager& sceneM) override;
 	virtual void Draw(sf::RenderWindow& window) override;
-};
 
+	void SetSlotIndex(int index);
+};

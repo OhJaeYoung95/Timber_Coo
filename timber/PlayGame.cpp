@@ -1,6 +1,6 @@
 #include "PlayGame.h"
 
-PlayGame::PlayGame(SceneType _type/*, std::vector<GameObject*>& gameObjects*/) : Scene(_type)
+PlayGame::PlayGame(SceneType _type/*, std::vector<GameObject*>& gameObjects*/) : Scene(_type), slotIndex(0)
 {
 }
 
@@ -16,10 +16,17 @@ void PlayGame::Release()
 {
 }
 
-void PlayGame::Update(float dt)
+void PlayGame::Update(float dt, SceneManager& sceneM)
 {
+
 }
 
 void PlayGame::Draw(sf::RenderWindow& window)
 {
+
+}
+
+void PlayGame::SetSlotIndex(int index)
+{
+	slotIndex = index;
 }

@@ -18,9 +18,9 @@ void Title::Init()
 	type = SceneType::Title;
 
 	// 타이틀 이미지
-	title.setPosition(1920.f / 2.f, 1080.f / 2.f);
-	title.setScale(3.f, 3.f);
-	Utils::SetOrigin(title, Origins::MC);
+	title.setPosition(0.f, 0.f);
+	title.setScale(1.f, 1.f);
+	Utils::SetOrigin(title, Origins::TL);
 
 	// 텍스트 생성
 	text.setFont(font);
@@ -36,8 +36,10 @@ void Title::Release()
 {
 }
 
-void Title::Update(float dt)
+void Title::Update(float dt, SceneManager& sceneM)
 {
+	if (InputMgr2::GetKeyDown(sf::Keyboard::Return))
+		sceneM.SetScene(SceneType::GameMode);
 }
 
 void Title::Draw(sf::RenderWindow& window)

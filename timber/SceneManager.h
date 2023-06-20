@@ -1,26 +1,25 @@
 #pragma once
-#include "Title.h"
-#include "GameMode.h"
-#include "SelectCharacter.h"
-#include "PlayGame.h"
-//#include "Defines.h"
+//#include "Title.h"
+//#include "GameMode.h"
+//#include "SelectCharacter.h"
+//#include "PlayGame.h"
+#include <vector>
+#include "Defines.h"
 #include "InputMgr2.h"
 
 
-//class Title;
-//class GameMode;
-//class SelectCharacter;
-//class PlayGame;
+class Title;
+class GameMode;
+class SelectCharacter;
+class PlayGame;
+class Scene;
 
 class SceneManager
 {
 private:
-	Title title;
-	GameMode gameMode;
-	SelectCharacter selectCharacter;
-	PlayGame playGame;
-
+	std::vector<Scene*> scene;
 	SceneType currentScene;
+
 public:
 	SceneManager();
 	~SceneManager();
@@ -30,5 +29,6 @@ public:
 	void Update(float dt);
 	void Draw(sf::RenderWindow& window);
 
+	void SetScene(SceneType type);
 };
 
