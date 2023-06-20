@@ -161,6 +161,7 @@ void Player::Update(float dt)
 		return;
 	if (!isChopping)
 	{
+
 		if (InputMgr2::GetKeyDown(sf::Keyboard::Left))
 		{
 			tree->UpdateBranches();
@@ -169,6 +170,20 @@ void Player::Update(float dt)
 		}
 
 		if (InputMgr2::GetKeyDown(sf::Keyboard::Right))
+		{
+			tree->UpdateBranches();
+			tree->GetCurrentint();
+			Chop(Sides::Right);
+		}		
+		
+		if (InputMgr2::GetKeyDown(sf::Keyboard::A))
+		{
+			tree->UpdateBranches();
+			tree->GetCurrentint();
+			Chop(Sides::Left);
+		}
+
+		if (InputMgr2::GetKeyDown(sf::Keyboard::D))
 		{
 			tree->UpdateBranches();
 			tree->GetCurrentint();

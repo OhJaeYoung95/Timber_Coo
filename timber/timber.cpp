@@ -12,6 +12,7 @@
 #include "Branch.h"
 #include "Tree.h"
 #include "Player.h"
+#include "PlayGame.h"
 
 using namespace std;
 
@@ -32,7 +33,7 @@ using namespace std;
 //    }
 //}
 
-int main()
+int main1()
 {
     bool isPause = true;
     bool isStart = false;
@@ -313,5 +314,15 @@ int main()
         obj->Release();
         delete obj;
     }
+    return 0;
+}
+
+int main()
+{
+    //PlayGame playgame(ModeSelect::Solo);
+    //playgame.SoloPlay();
+    PlayGame playgame(ModeSelect::Multi);
+    playgame.MultiPlay();
+
     return 0;
 }

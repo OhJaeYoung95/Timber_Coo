@@ -12,6 +12,7 @@ Tree::Tree(std::vector<GameObject*>& games, sf::Texture& tex, sf::Vector2f sprit
 	branchPosVec(6), 
 	xPos(0), yPos(800.f)
 {
+	//gameObjectList[0]->SetActive(false);
 	branchTex.loadFromFile("graphics/branch.png");
 	texLog.loadFromFile("graphics/log.png");
 
@@ -21,7 +22,7 @@ Tree::Tree(std::vector<GameObject*>& games, sf::Texture& tex, sf::Vector2f sprit
 		branchList[i]->SetTree(this);
 		Sides side = (Sides)Utils::RandomRange(0, 2);
 		branchList[i]->SetSide(side);
-		this->gameObjectList.push_back(branchList[i]);
+		/*this->gameObjectList.push_back(branchList[i]);*/
 	}
 	offsetY = branchList[0]->GetSize().y + 100.f;
 	xPos = GetPosition().x;
@@ -154,11 +155,13 @@ void Tree::Draw(sf::RenderWindow& window)
 	SpriteGo::Draw(window);
 	for (auto branch : branchList)
 	{
-		branch->Draw(window);
+		if(branch->GetActive())
+			branch->Draw(window);
 	}
 	for (auto effect : logEffects)
 	{
-		effect->Draw(window);
+		if(effect->GetActive())
+			effect->Draw(window);
 	}
 
 }

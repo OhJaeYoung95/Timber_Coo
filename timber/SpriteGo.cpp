@@ -34,6 +34,11 @@ void SpriteGo::SetOrigin(float x, float y)
 	sprite.setOrigin(x, y);
 }
 
+void SpriteGo::SetSize(float x, float y)
+{
+	sprite.setScale(x, y);
+}
+
 sf::Vector2f SpriteGo::GetSize() const
 {
 	sf::FloatRect rect = sprite.getLocalBounds();

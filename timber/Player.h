@@ -17,6 +17,8 @@ protected:
 	float axeOffsetY;
 	float axeOffsetX;
 
+	int who;
+
 	float offsetX;
 	sf::Vector2f playerPositions[2];
 	sf::Vector2f axePositions[2];

@@ -8,7 +8,7 @@
 class Tree : public SpriteGo
 {
 private:
-	std::vector<GameObject*>& gameObjectList;
+	std::vector<GameObject*> gameObjectList;
 	std::vector<Branch*> branchList;
 	std::vector<sf::Vector2f> branchPosVec;
 	sf::Texture branchTex;
