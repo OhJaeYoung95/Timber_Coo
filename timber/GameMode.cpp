@@ -3,6 +3,8 @@
 
 GameMode::GameMode(SceneType _type) : Scene(_type), slotIndex(0)
 {
+	bgTex.loadFromFile("graphics/back1.png");
+	SetTexture(bg, bgTex);
 
 	// 이미지 설정
 	modeForOneTex.loadFromFile("graphics/1p.png");
@@ -56,6 +58,7 @@ void GameMode::Release()
 
 void GameMode::Update(float dt, SceneManager& sceneM)
 {
+	Blink(dt);
 	if (InputMgr2::GetKeyDown(sf::Keyboard::Left) && slotIndex >=1)
 	{
 		slotIndex--;
@@ -73,12 +76,19 @@ void GameMode::Update(float dt, SceneManager& sceneM)
 
 void GameMode::Draw(sf::RenderWindow& window)
 {
+	window.draw(bg);
 	window.draw(modeForOne);
 	window.draw(modeForTwo);
-	if(slotIndex == 0)
-		window.draw(text1);
+	if (slotIndex == 0)
+	{
+		if(blinkTimer > 0)
+			window.draw(text1);
+	}
 	else
-		window.draw(text2);
+	{
+		if (blinkTimer > 0)
+			window.draw(text2);
+	}
 }
 
 int GameMode::GetSlotIndex()

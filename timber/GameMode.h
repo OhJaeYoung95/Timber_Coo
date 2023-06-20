@@ -7,6 +7,10 @@ class SceneManager;
 class GameMode : public Scene
 {
 private:
+
+	sf::Texture bgTex;
+	sf::Sprite bg;
+
 	sf::Texture modeForOneTex;
 	sf::Sprite modeForOne;
 

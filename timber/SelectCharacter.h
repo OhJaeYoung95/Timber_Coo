@@ -6,6 +6,9 @@ class SceneManager;
 class SelectCharacter : public Scene
 {
 private:
+	sf::Texture bgTex;
+	sf::Sprite bg;
+
 	// 캐릭터 이미지
 	sf::Texture c1Tex;
 	sf::Sprite c1;

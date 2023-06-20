@@ -38,6 +38,7 @@ void Title::Release()
 
 void Title::Update(float dt, SceneManager& sceneM)
 {
+	Blink(dt);
 	if (InputMgr2::GetKeyDown(sf::Keyboard::Return))
 		sceneM.SetScene(SceneType::GameMode);
 }
@@ -45,7 +46,13 @@ void Title::Update(float dt, SceneManager& sceneM)
 void Title::Draw(sf::RenderWindow& window)
 {
 	window.draw(title);
-	window.draw(text);
+	if (blinkTimer > 0)
+	{
+		window.draw(text);
+	}
+
+
+
 }
 
 void Title::SetTexture(sf::Texture& tex)

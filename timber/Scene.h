@@ -7,6 +7,7 @@ class Scene
 {
 protected:
 	SceneType type;
+	float blinkTimer;
 public:
 	Scene(SceneType _type);
 	virtual ~Scene();
@@ -17,4 +18,5 @@ public:
 	virtual void Draw(sf::RenderWindow& window) = 0;
 
 	void SetTexture(sf::Sprite& sprite, sf::Texture& tex);
+	void Blink(float dt);
 };

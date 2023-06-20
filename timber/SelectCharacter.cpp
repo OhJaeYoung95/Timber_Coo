@@ -5,6 +5,9 @@
 
 SelectCharacter::SelectCharacter(SceneType _type) : Scene(_type) , playerTurn(0), slotIndex(1)
 {
+	bgTex.loadFromFile("graphics/back2.png");
+	SetTexture(bg, bgTex);
+
 	// 이미지 설정
 	c1Tex.loadFromFile("graphics/player.png");
 	SetTexture(c1, c1Tex);
@@ -41,29 +44,29 @@ void SelectCharacter::Init()
 	playerTurnText.setFont(font);
 	playerTurnText.setString("Select Player 1");
 	playerTurnText.setCharacterSize(75);
-	playerTurnText.setFillColor(sf::Color::White);
+	playerTurnText.setFillColor(sf::Color::Black);
 	Utils::SetOrigin(playerTurnText, Origins::TL);
 	playerTurnText.setPosition(100.f, 60.f);
 
 	// 캐릭터
-	c1.setPosition(500.f, 1080.f / 2.f + 300.f);
+	c1.setPosition(500.f, 1080.f / 2.f + 100.f);
 	Utils::SetOrigin(c1, Origins::MC);
-	frame1.setPosition(500.f, 1080.f / 2.f + 300.f);
+	frame1.setPosition(500.f, 1080.f / 2.f + 100.f);
 	frame1.setScale(0.5f, 0.5f);
 	Utils::SetOrigin(frame1, Origins::MC);
 
-	c2.setPosition(1400.f, 1080.f / 2.f + 300.f);
+	c2.setPosition(1400.f, 1080.f / 2.f + 100.f);
 	c2.setScale(0.22f, 0.22f);
 	Utils::SetOrigin(c2, Origins::MC);
-	frame2.setPosition(1400.f, 1080.f / 2.f + 300.f);
+	frame2.setPosition(1400.f, 1080.f / 2.f + 100.f);
 	frame2.setScale(0.5f, 0.5f);
 	Utils::SetOrigin(frame2, Origins::MC);
 
 	// 커서
-	c1Cursor.setPosition(280.f, 1080.f / 2.f - 200.f);
+	c1Cursor.setPosition(280.f, 1080.f / 2.f - 400.f);
 	c1Cursor.setScale(0.5f, 0.5f);
 	Utils::SetOrigin(c2, Origins::MC);
-	c2Cursor.setPosition(1180.f, 1080.f / 2.f - 200.f);
+	c2Cursor.setPosition(1180.f, 1080.f / 2.f - 400.f);
 	c2Cursor.setScale(0.5f, 0.5f);
 	Utils::SetOrigin(c2, Origins::MC);
 
@@ -76,6 +79,7 @@ void SelectCharacter::Release()
 
 void SelectCharacter::Update(float dt, SceneManager& sceneM)
 {
+	Blink(dt);
 	if (InputMgr2::GetKeyDown(sf::Keyboard::Left) && slotIndex >= 1)
 	{
 		slotIndex--;
@@ -119,6 +123,7 @@ void SelectCharacter::Update(float dt, SceneManager& sceneM)
 
 void SelectCharacter::Draw(sf::RenderWindow& window)
 {
+	window.draw(bg);
 	window.draw(frame1);
 	window.draw(frame2);
 	window.draw(c1);
@@ -126,9 +131,15 @@ void SelectCharacter::Draw(sf::RenderWindow& window)
 	window.draw(playerTurnText);
 
 	if (slotIndex == 0)
-		window.draw(c1Cursor);
+	{
+		if(blinkTimer > 0)
+			window.draw(c1Cursor);
+	}
 	else
-		window.draw(c2Cursor);
+	{
+		if (blinkTimer > 0)
+			window.draw(c2Cursor);
+	}
 }
 
 void SelectCharacter::SetSlotIndex(int index)

@@ -18,7 +18,15 @@ void PlayGame::Release()
 
 void PlayGame::Update(float dt, SceneManager& sceneM)
 {
+	if (InputMgr2::GetKeyDown(sf::Keyboard::Enter))
+	{
+		sceneM.SetScene(SceneType::Play);
+	}
 
+	if (InputMgr2::GetKeyDown(sf::Keyboard::Tab))
+	{
+		sceneM.SetScene(SceneType::GameMode);
+	}	
 }
 
 void PlayGame::Draw(sf::RenderWindow& window)
