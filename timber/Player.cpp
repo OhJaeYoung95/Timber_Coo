@@ -2,10 +2,13 @@
 #include "Tree.h"
 #include "InputMgr2.h"
 
-Player::Player(sf::Texture& tex, sf::Vector2f spriteDir, const std::string& n, const sf::Vector2f p) : SpriteGo(tex, spriteDir, n, p), offsetX(100.f), axeOffsetY(77.f), axeOffsetX(58.f), isChopping(false), isAlive(true), texPlayer(tex)
+Player::Player(sf::Texture& tex, sf::Vector2f spriteDir, const std::string& n, const sf::Vector2f p) 
+	: SpriteGo(tex, spriteDir, n, p), offsetX(100.f), axeOffsetY(77.f), axeOffsetX(58.f), isChopping(false), isAlive(true), texPlayer(tex)
 {
 	texAxe.loadFromFile("graphics/axe.png");
 	axe = new SpriteGo(texAxe);
+	texplayer2.loadFromFile("graphics/player2.png");
+
 
 	SetOrigin(Origins::BC);
 
@@ -19,15 +22,6 @@ Player::Player(sf::Texture& tex, sf::Vector2f spriteDir, const std::string& n, c
 	}
 
 	texRip.loadFromFile("graphics/rip.png");
-
-	soundBufferChop.loadFromFile("sound/chop.wav");
-	soundBufferDeath.loadFromFile("sound/death.wav");
-	soundBufferOutOfTime.loadFromFile("sound/out_of_time.wav");
-
-	soundChop.setBuffer(soundBufferChop);
-	soundDeath.setBuffer(soundBufferDeath);
-	soundOutOfTime.setBuffer(soundBufferDeath);
-
 
 }
 
@@ -72,10 +66,9 @@ void Player::Chop(Sides side)
 	Sides effectSide = (Sides)(((int)side + 1) % 2);
 	tree->ShowEffectLog(effectSide, pos);
 	isChopping = true;
-	soundChop.play();
 }
 
-void Player::Die(bool isTimeOut)
+void Player::Die()
 {
 	isAlive = false;
 	isChopping = false;
@@ -83,24 +76,13 @@ void Player::Die(bool isTimeOut)
 	SetTexture(texRip);
 	SetOrigin(Origins::BC);
 	SetFlipX(true);
+
 	//if (isTimeOut)
 	//	soundOutOfTime.play();
 	//else
 	//	soundDeath.play();
+
 }
-
-//bool Player::IsAlive()
-//{
-//	return isAlive;
-//}
-//
-//bool Player::CheckCollide()
-//{
-//	if (GetSide() == tree->GetCurrentSide())
-//		return true;
-//	return false;
-//}
-
 
 void Player::SetPosition(float x, float y)
 {
@@ -119,8 +101,13 @@ void Player::SetOrigin(Origins origin)
 
 void Player::Init()
 {
+	//playerchoise->CharacterChoise();
 	isAlive = true;
-	SetTexture(texPlayer);
+	//if(playerchoise->GetselectedCharacter() == 0)
+		SetTexture(texPlayer);
+	//if (playerchoise->GetselectedCharacter() == 1)
+		//SetTexture(texplayer2);
+
 	SetOrigin(Origins::BC);
 
 	isChopping = false;
@@ -156,7 +143,7 @@ void Player::Release()
 void Player::Update(float dt)
 {
 	SpriteGo::Update(dt);
-
+	
 	if (!isAlive)
 		return;
 	if (!isChopping)

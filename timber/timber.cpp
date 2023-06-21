@@ -1,5 +1,4 @@
 ﻿#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
 #include <vector>
 #include <sstream>
 
@@ -18,13 +17,13 @@
 #include "SelectCharacter.h"
 #include "PlayGame.h"
 
+#include "PlayerChoise.h"
 using namespace std;
 
 int main()
 {
     bool isPause = true;
     bool isStart = false;
-    bool isTimeOut = false;
     int score = 0;
     int bestScore = 0;
 
@@ -93,10 +92,10 @@ int main()
     texBee.loadFromFile("graphics/bee.png");
     sf::Texture texPlayer;
     texPlayer.loadFromFile("graphics/player.png");
-
-
-    
-
+    sf::Texture texarrow;
+    texarrow.loadFromFile("graphics/arrow.png");
+    sf::Texture texPlayer2;
+    texPlayer2.loadFromFile("graphics/player2.png");
 
     // 1. Init
     std::vector<GameObject*> gameObjects;
@@ -134,14 +133,19 @@ int main()
 
     // 플레이어 생성
     Player* player = new Player(texPlayer, sf::Vector2f(-1.f, -1.f), "Player", sf::Vector2f(0.f, 880.f));
+    /*Player* player = new Player(playerchoise->GetPlayer(), sf::Vector2f(-1.f, -1.f), "Player", sf::Vector2f(0.f, 880.f));*/
     player->SetTree(tree);
     gameObjects.push_back(player);
 
+    PlayerChoise* playerchoise = new PlayerChoise(texarrow);
 
-    for (auto& obj : gameObjects)
-    {
-        obj->Init();
-    }
+    /*playerchoise->Init();*/
+
+    
+        for (auto& obj : gameObjects)
+        {
+            obj->Init();
+        }
 
     //Title title(SceneType::Title);
     //title.Init();
@@ -159,7 +163,7 @@ int main()
 
     // 윈도우가 살아있으면
     while (window.isOpen())
-    {   
+    {
         //InputMgr::Clear();
         InputMgr2::ClearInput();
 
@@ -181,107 +185,131 @@ int main()
         }
         scene.Update(deltaTime);
         // 2. Update
+        
+         //Update
+        playerchoise->Update(deltaTime);
+        player->SetTexture(playerchoise->GetPlayer());
+
+
+        //window.clear();     // 백버퍼 클리어
+        //
+
+        /*window.display();*/   // 화면 출력
+
+        //Player* player = new Player(playerchoise->GetPlayer(), sf::Vector2f(-1.f, -1.f), "Player", sf::Vector2f(0.f, 880.f));
+        /*player->SetTree(tree);
+        gameObjects.push_back(player);*/
 
         // 타이머
-        //if (!isPause)   // 게임중일때
-        //{
-        //    timer -= deltaTime;
-        //    if (timer <= 0.f)
-        //    {
-        //        textMessage.setString("OUT OF TIME");
-        //        Utils::SetOrigin(textMessage, Origins::MC);
-        //        isPause = true;
-        //        isTimeOut = true;
-        //        player->Die(isTimeOut);
+        if (!isPause)   // 게임중일때
+        {
+            timer -= deltaTime;
+            if (timer <= 0.f)
+            {
+                textMessage.setString("OUT OF TIME");
+                Utils::SetOrigin(textMessage, Origins::MC);
+                isPause = true;
+                player->Die();
 
         //        if (score > bestScore)
         //            bestScore = score;
 
-        //        std::stringstream ss1;
-        //        ss1 << "BEST SCORE: " << bestScore;
-        //        textBestScore.setString(ss1.str());
-        //    }
-        //    else if (player->GetSide() == tree->GetCurrentSide())
-        //    {
-        //        textMessage.setString("Game Over");
-        //        Utils::SetOrigin(textMessage, Origins::MC);
-        //        isPause = true;
-        //        player->Die(isTimeOut);
+                std::stringstream ss1;
+                ss1 << "BEST SCORE: " << bestScore;
+                textBestScore.setString(ss1.str());
+
+            }
+            else if (player->GetSide() == tree->GetCurrentSide())
+            {
+                textMessage.setString("Game Over");
+                Utils::SetOrigin(textMessage, Origins::MC);
+                isPause = true;
+                player->Die();
 
         //        if (score > bestScore)
         //            bestScore = score;
 
-        //        std::stringstream ss1;
-        //        ss1 << "BEST SCORE: " << bestScore;
-        //        textBestScore.setString(ss1.str());
-        //    }
-        //    else
-        //    {
-        //        if ((InputMgr2::GetKeyDown(sf::Keyboard::Left) ||
-        //            InputMgr2::GetKeyDown(sf::Keyboard::Right))&& timer <= 5.8f)
-        //        {
-        //            std::cout << tree->GetCurrentint() <<endl;
-        //            timer += 0.3f;
-        //            score += 1;
-        //        }
-        //        // 정규화 퍼센트 단위로 만들어서 타이머의 시간을 통해 타이머
-        //        float normTime = timer / duration;
-        //        float timeSizeX = uiTimerWidth * normTime;
+                std::stringstream ss1;
+                ss1 << "BEST SCORE: " << bestScore;
+                textBestScore.setString(ss1.str());
+            }
+            else
+            {
+                if ((InputMgr2::GetKeyDown(sf::Keyboard::Left) ||
+                    InputMgr2::GetKeyDown(sf::Keyboard::Right)) && timer <= 5.8f)
+                {
+                    std::cout << tree->GetCurrentint() << endl;
+                    timer += 0.3f;
+                    score += 1;
+                }
+                // 정규화 퍼센트 단위로 만들어서 타이머의 시간을 통해 타이머
+                float normTime = timer / duration;
+                float timeSizeX = uiTimerWidth * normTime;
 
 
-        //        uiTimer.setSize(sf::Vector2f(timeSizeX, uiTimerheight));
-        //        for (auto& obj : gameObjects)
-        //        {
-        //            obj->Update(deltaTime);
-        //        }
-        //            
-        //        std::stringstream ss;
-        //        ss << "SCORE: " << score;
-        //        textScore.setString(ss.str());
-        //    }
-        //}
-        //else
-        //{
-        //    if (InputMgr2::GetKeyDown(sf::Keyboard::Return) &&  !isStart)
-        //    {
-        //        isTimeOut = false;
-        //        timer = duration;
-        //        score = 0;
-        //        isStart = true;
-        //        isPause = false;
-        //    }
-        //    else if (InputMgr2::GetKeyDown(sf::Keyboard::Return)&& isStart)
-        //    {
-        //        isTimeOut = false;
-        //        timer = duration;
-        //        score = 0;
-        //        isPause = false;
-        //        for (auto& obj : gameObjects)
-        //        {
-        //            if (obj->GetActive())
-        //                obj->Init();
-        //        }
-        //    }
-        //}
+                uiTimer.setSize(sf::Vector2f(timeSizeX, uiTimerheight));
+                for (auto& obj : gameObjects)
+                {
+                    obj->Update(deltaTime);
+                }
+
+                std::stringstream ss;
+                ss << "SCORE: " << score;
+                textScore.setString(ss.str());
+            }
+        }
+        else
+        {
+            if (InputMgr2::GetKeyDown(sf::Keyboard::Return) && !isStart)
+            {
+                timer = duration;
+                score = 0;
+                isStart = true;
+                isPause = false;
+            }
+            else if (InputMgr2::GetKeyDown(sf::Keyboard::Return) && isStart)
+            {
+                timer = duration;
+                score = 0;
+                isPause = false;
+                for (auto& obj : gameObjects)
+                {
+                    if (obj->GetActive())
+                        obj->Init();
+                }
+            }
+        }
 
         window.clear();     // 백버퍼 클리어
+        //playerchoise->Draw(window);
 
+        window.clear();
         // 3. Draw
-        //for (auto& obj: gameObjects)
-        //{
-        //    if (obj->GetActive())
-        //        obj->Draw(window);
-        //}
-        //window.draw(textScore);
-        //window.draw(uiTimerFrame);
-        //window.draw(uiTimer);
-        //if (isPause)
-        //{
-        //    window.draw(textMessage);
-        //    window.draw(textBestScore);
-        //}
-        //title.Draw(window);
-        //gameMode.Draw(window);
+        //엔터키 누르면 캐릭터 선택 화면에서 클리어 하고 기존 게임 드로우로 가보자
+        //엔터키 눌러서 펄스로 바뀌면 밑으로 실행되게 
+        if (playerchoise->TrueFales())
+            playerchoise->Draw(window);
+        else
+            for (auto& obj : gameObjects)
+            {
+
+                    if (obj->GetActive())
+                        obj->Draw(window);
+
+            }
+
+            window.draw(textScore);
+            window.draw(uiTimerFrame);
+            window.draw(uiTimer);
+            if (isPause)
+            {
+                window.draw(textMessage);
+                window.draw(textBestScore);
+            }
+
+            window.display();   // 화면 출력
+
+
         scene.Draw(window);
         window.display();   // 화면 출력
     }
