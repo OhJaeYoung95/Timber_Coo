@@ -2,7 +2,7 @@
 #include "Tree.h"
 
 PlayGame::PlayGame(SceneManager& _scene, SceneType _type)
-    : Scene(_type), modeIndex(0), characterIndex(0), scene(_scene)
+    : Scene(_type), modeIndex(0), characterIndex(0), scene(_scene), isPlaying(false)
 {
     SetScene(_scene);
 
@@ -26,7 +26,7 @@ PlayGame::PlayGame(SceneManager& _scene, SceneType _type)
         newGo->SetSpeedRange(sf::Vector2f(300.f, 600.f));
         newGo->SetLRPos(sf::Vector2f(-200.f, 1080.f / 2.f), sf::Vector2f(1920.f + 200.f, 1080.f / 2.f));
         newGo->SetPosXRange(0.f, 0.f);
-        newGo->SetPosYRange(-300.f, 300.f);
+        newGo->SetPosYRange(-500.f, -100.f);
         gameObjects.push_back(newGo);
     }
 
@@ -62,7 +62,7 @@ PlayGame::~PlayGame()
 
 void PlayGame::Init(ModeSelect mode, SceneManager& sceneM)
 {
-    // 
+    // 플레이어 1,2 텍스쳐
     texPlayer1.loadFromFile(sceneM.GetPlayer1());
     texPlayer2.loadFromFile(sceneM.GetPlayer2());
 
@@ -134,7 +134,7 @@ void PlayGame::Init(ModeSelect mode, SceneManager& sceneM)
     uiTimerFrame1.setSize(sf::Vector2f(uiTimerWidth,uiTimerheight));
     uiTimerFrame1.setFillColor(sf::Color::White);
     Utils::SetOrigin(uiTimerFrame1, Origins::BC);
-    uiTimerFrame1.setPosition(screenWidth * 0.5f, screenHeight * 0.5f);
+    uiTimerFrame1.setPosition(uiTimer1.getPosition());
 
     // 타이머 프레임2
     uiTimerFrame2.setSize(sf::Vector2f(uiTimerWidth,uiTimerheight));
@@ -179,18 +179,11 @@ void PlayGame::Init(ModeSelect mode, SceneManager& sceneM)
     if (modeP == ModeSelect::Solo)
     {
         player[1]->SetActive(false);
+        tree[0]->SetPosition(screenWidth / 2.f, 0.f);
+        tree[0]->Init();
+        player[0]->Init();
         tree[1]->SetActive(false);
     }
-
-    if (texPlayer1.getSize() != sf::Vector2u(0, 0))
-    {
-        std::cout << "성공";
-    }
-    else
-    {
-        std::cout << "실패";
-    }
-
 }
 
 void PlayGame::Draw(sf::RenderWindow& window)
@@ -205,13 +198,14 @@ void PlayGame::Draw(sf::RenderWindow& window)
         // 솔로
         if (modeP == ModeSelect::Solo)
         {
-            window.draw(textScore1);
-            window.draw(uiTimerFrame1);
-            window.draw(uiTimer1);
             tree[0]->Draw(window);
             player[0]->Draw(window);
+            window.draw(uiTimerFrame1);
+            window.draw(uiTimer1);
+            window.draw(textScore1);
         }
-        else if (modeP == ModeSelect::Multi)        // 멀티
+        // 멀티
+        else if (modeP == ModeSelect::Multi)        
         {
             for (int i = 0; i < 2; i++)
             {
@@ -263,7 +257,6 @@ void PlayGame::Release()
 
 void PlayGame::Update(float dt, SceneManager& sceneM)
 {
-    std::cout << "플레이 게임 시작" << std::endl;
 	if (InputMgr2::GetKeyDown(sf::Keyboard::Enter))
 	{
 		sceneM.SetScene(SceneType::Play);
@@ -277,6 +270,8 @@ void PlayGame::Update(float dt, SceneManager& sceneM)
     // 2. Update
     if (modeP == ModeSelect::Solo)
     {
+        isPlaying = true;
+
         // UPDATE
 
         if (!isPause)   // 게임중일때
@@ -289,6 +284,7 @@ void PlayGame::Update(float dt, SceneManager& sceneM)
                 isPause = true;
                 isTimeOut = true;
                 player[0]->Die(isTimeOut);
+                isPlaying = false;
 
                 if (score1 > bestScore)
                     bestScore = score1;
@@ -303,6 +299,7 @@ void PlayGame::Update(float dt, SceneManager& sceneM)
                 Utils::SetOrigin(textMessage, Origins::MC);
                 isPause = true;
                 player[0]->Die(isTimeOut);
+                isPlaying = false;
 
                 if (score1 > bestScore)
                     bestScore = score1;

@@ -68,6 +68,8 @@ private:
 	sf::Texture texBee;
 	sf::Texture texPlayer1;
 	sf::Texture texPlayer2;
+
+	bool isPlaying;
 public:
 
 	PlayGame(SceneManager& _scene, SceneType _type);

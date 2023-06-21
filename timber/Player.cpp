@@ -83,7 +83,7 @@ void Player::Die(bool isTimeOut)
 
 	SetTexture(texRip);
 	SetOrigin(Origins::BC);
-	SetFlipX(true);
+	SetFlipX(false);
 	if (isTimeOut)
 		soundOutOfTime.play();
 	else
