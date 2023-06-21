@@ -11,10 +11,14 @@
 #include "Branch.h"
 #include "Tree.h"
 #include "Player.h"
+#include "SceneManager.h"
+#include "Title.h"
+#include "GameMode.h"
+#include "SelectCharacter.h"
+#include "PlayGame.h"
+
 #include "PlayerChoise.h"
 using namespace std;
-
-
 
 int main()
 {
@@ -110,10 +114,6 @@ int main()
         gameObjects.push_back(newGo);
     }
     
-
-
-
-
     // 벌 생성
     MovingBgObj* beeGo = new MovingBgObj(texBee, sf::Vector2f(-1.f, 0.f), "Bee");
     beeGo->SetSpeedRange(sf::Vector2f(300.f, 600.f));
@@ -147,7 +147,15 @@ int main()
             obj->Init();
         }
 
+    //Title title(SceneType::Title);
+    //title.Init();
 
+    //GameMode gameMode(SceneType::GameMode);
+    //gameMode.Init();
+
+    SceneManager scene;
+    scene.Init();
+    
 
     sf::RenderWindow window(sf::VideoMode(screenWidth , screenHeight), "Timber!", sf::Style::Default);
 
@@ -175,6 +183,8 @@ int main()
                 break;
             }
         }
+        scene.Update(deltaTime);
+        // 2. Update
         
          //Update
         playerchoise->Update(deltaTime);
@@ -201,8 +211,8 @@ int main()
                 isPause = true;
                 player->Die();
 
-                if (score > bestScore)
-                    bestScore = score;
+        //        if (score > bestScore)
+        //            bestScore = score;
 
                 std::stringstream ss1;
                 ss1 << "BEST SCORE: " << bestScore;
@@ -216,8 +226,8 @@ int main()
                 isPause = true;
                 player->Die();
 
-                if (score > bestScore)
-                    bestScore = score;
+        //        if (score > bestScore)
+        //            bestScore = score;
 
                 std::stringstream ss1;
                 ss1 << "BEST SCORE: " << bestScore;
@@ -299,7 +309,12 @@ int main()
 
             window.display();   // 화면 출력
 
+
+        scene.Draw(window);
+        window.display();   // 화면 출력
     }
+
+    scene.Release();
     for (auto& obj : gameObjects)
     {
         obj->Release();

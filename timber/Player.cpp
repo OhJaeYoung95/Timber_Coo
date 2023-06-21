@@ -76,6 +76,12 @@ void Player::Die()
 	SetTexture(texRip);
 	SetOrigin(Origins::BC);
 	SetFlipX(true);
+
+	//if (isTimeOut)
+	//	soundOutOfTime.play();
+	//else
+	//	soundDeath.play();
+
 }
 
 void Player::SetPosition(float x, float y)
