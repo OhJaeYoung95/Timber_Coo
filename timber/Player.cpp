@@ -1,18 +1,15 @@
 #include "Player.h"
 #include "Tree.h"
 #include "InputMgr2.h"
-using namespace sf;
 
-Player::Player(sf::Texture& tex, sf::Vector2f spriteDir, const std::string& n, const sf::Vector2f p) : SpriteGo(tex, spriteDir, n, p), offsetX(100.f), axeOffsetY(77.f), axeOffsetX(58.f), isChopping(false), isAlive(true), texPlayer(tex)
+Player::Player(sf::Texture& tex, sf::Vector2f spriteDir, const std::string& n, const sf::Vector2f p) 
+	: SpriteGo(tex, spriteDir, n, p), offsetX(100.f), axeOffsetY(77.f), axeOffsetX(58.f), isChopping(false), isAlive(true), texPlayer(tex)
 {
-	texPlayer1.loadFromFile("graphics/player.png");
-	texPlayer2.loadFromFile("graphics/player2.png");
-	texchoiseBG.loadFromFile("graphics/choiseBG.png");
-	texarrow.loadFromFile("graphics/arrow.png");
 	texAxe.loadFromFile("graphics/axe.png");
-	arrow = new SpriteGo(texarrow);
 	axe = new SpriteGo(texAxe);
-	isCharacterSelected = false;
+	texplayer2.loadFromFile("graphics/player2.png");
+
+
 	SetOrigin(Origins::BC);
 
 	for (auto& position : playerPositions)
@@ -26,41 +23,13 @@ Player::Player(sf::Texture& tex, sf::Vector2f spriteDir, const std::string& n, c
 
 	texRip.loadFromFile("graphics/rip.png");
 
-	soundBufferChop.loadFromFile("sound/chop.wav");
-	soundBufferDeath.loadFromFile("sound/death.wav");
-	soundBufferOutOfTime.loadFromFile("sound/out_of_time.wav");
-
-	soundChop.setBuffer(soundBufferChop);
-	soundDeath.setBuffer(soundBufferDeath);
-	soundOutOfTime.setBuffer(soundBufferDeath);
-
 }
 
 Player::~Player()
 {
 
 }
-void Player::Choise()
-{
-	while (isCharacterSelected = false)
-	SetTexture(texchoiseBG);
-	if (InputMgr2::GetKeyDown(sf::Keyboard::Left))
-	{
-		arrow->SetPosition(1920.f * 0.3, 300);
-		selectedCharacter = 0;
-	}
 
-	if (InputMgr2::GetKeyDown(sf::Keyboard::Right))
-	{
-		arrow->SetPosition(1920.f * 0.6, 300);
-		selectedCharacter = 1;
-	}
-
-	if (InputMgr2::GetKeyDown(sf::Keyboard::Enter))
-	{
-		isCharacterSelected = true;
-	}
-}
 
 void Player::SetTree(Tree* tree)
 {
@@ -77,7 +46,11 @@ void Player::SetSide(Sides side)
 	axe->SetPosition(GetPosition());
 	axe->SetFlipX(this->side == Sides::Left);
 
-
+	// axe
+	//axePositions[(int)Sides::Left] = sf::Vector2f(this->GetPosition().x - axeOffsetX, this->GetPosition().y - axeOffsetY);
+	//axePositions[(int)Sides::Right] = sf::Vector2f(this->GetPosition().x + axeOffsetX, this->GetPosition().y - axeOffsetY);
+	//axe->SetPosition(axePositions[(int)this->side]);
+	//axe->SetFlipX(this->side != Sides::Right);
 }
 
 Sides Player::GetSide() const
@@ -93,10 +66,9 @@ void Player::Chop(Sides side)
 	Sides effectSide = (Sides)(((int)side + 1) % 2);
 	tree->ShowEffectLog(effectSide, pos);
 	isChopping = true;
-	soundChop.play();
 }
 
-void Player::Die(bool isTimeOut)
+void Player::Die()
 {
 	isAlive = false;
 	isChopping = false;
@@ -104,14 +76,7 @@ void Player::Die(bool isTimeOut)
 	SetTexture(texRip);
 	SetOrigin(Origins::BC);
 	SetFlipX(true);
-	if (isTimeOut)
-		soundOutOfTime.play();
-	else
-		soundDeath.play();
 }
-
-
-
 
 void Player::SetPosition(float x, float y)
 {
@@ -130,9 +95,13 @@ void Player::SetOrigin(Origins origin)
 
 void Player::Init()
 {
-	Choise();
+	//playerchoise->CharacterChoise();
 	isAlive = true;
-	SetTexture(texPlayer);
+	//if(playerchoise->GetselectedCharacter() == 0)
+		SetTexture(texPlayer);
+	//if (playerchoise->GetselectedCharacter() == 1)
+		//SetTexture(texplayer2);
+
 	SetOrigin(Origins::BC);
 
 	isChopping = false;
@@ -168,7 +137,7 @@ void Player::Release()
 void Player::Update(float dt)
 {
 	SpriteGo::Update(dt);
-
+	
 	if (!isAlive)
 		return;
 	if (!isChopping)
