@@ -21,9 +21,10 @@ GameMode::~GameMode()
 {
 }
 
-void GameMode::Init()
+void GameMode::Init(SceneManager& sceneM)
 {
 	modeIndex = 0;
+	sceneM.SetModeIndex(modeIndex);
 
 	// 게임모드 이미지
 	Utils::SetOrigin(modeForOne, Origins::MC);
@@ -73,6 +74,7 @@ void GameMode::Update(float dt, SceneManager& sceneM)
 	if (InputMgr2::GetKeyDown(sf::Keyboard::Return))
 	{
 		sceneM.SetScene(SceneType::Select);
+		sceneM.SetModeIndex(modeIndex);
 	}
 }
 

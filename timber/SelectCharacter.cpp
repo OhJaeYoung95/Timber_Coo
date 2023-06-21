@@ -4,7 +4,8 @@
 #include "Utils.h"
 
 SelectCharacter::SelectCharacter(SceneType _type) 
-	: Scene(_type) , playerTurn(0), characterIndex(1)
+	: Scene(_type) , playerTurn(0), characterIndex(1),
+	isPick1(false), isPick2(false), gameMode(0)
 {
 	bgTex.loadFromFile("graphics/back2.png");
 	SetTexture(bg, bgTex);
@@ -36,10 +37,16 @@ SelectCharacter::~SelectCharacter()
 
 }
 
-void SelectCharacter::Init()
+void SelectCharacter::Init(SceneManager& sceneM)
 {
 	playerTurn = 0;
 	characterIndex = 0;
+	gameMode = 0;
+	isPick1 = false;
+	isPick2 = false;
+	characterIndex = sceneM.GetCharacterIndex();
+	// 0 일때 1인 , 1일때 2인
+	gameMode = sceneM.GetModeIndex();
 
 	// 텍스트
 	playerTurnText.setFont(font);
@@ -92,13 +99,33 @@ void SelectCharacter::Update(float dt, SceneManager& sceneM)
 		sceneM.SetCharacterIndex(characterIndex);
 	}
 
-
-	// 테스트 코드
-	if (InputMgr2::GetKeyDown(sf::Keyboard::Enter) && playerTurn < 1)
+	if (InputMgr2::GetKeyDown(sf::Keyboard::Enter))
 	{
-		characterIndex = 0;
+		// bool Texture  bool 2r개중 하나가 값이 변해 
+		if (playerTurn == 0 && !isPick1)
+		{
+			if(characterIndex == 0)
+				sceneM.SetPlayer1(c1);
+			else if(characterIndex == 1)
+				sceneM.SetPlayer1(c2);
+			isPick1 = true;
+		}
+		else if (playerTurn == 1 && !isPick2 && gameMode != 0)
+		{
+			if (characterIndex == 0)
+				sceneM.SetPlayer2(c1);
+			else if (characterIndex == 1)
+				sceneM.SetPlayer2(c2);
+			isPick2 = true;
+		}
+
+		if (gameMode == 0)
+			isPick2 = true;
 		playerTurn = playerTurn + 1;
-		InputMgr2::ClearInput();
+
+		// 화면 전환
+		if (isPick1 && isPick2)
+			sceneM.SetScene(SceneType::Play);
 	}
 	
 	if (playerTurn == 0)
@@ -106,7 +133,6 @@ void SelectCharacter::Update(float dt, SceneManager& sceneM)
 		playerTurnText.setString("Select Player 1");
 		Utils::SetOrigin(playerTurnText, Origins::TL);
 		playerTurnText.setPosition(100.f, 60.f);
-
 	}
 	else
 	{
@@ -114,14 +140,6 @@ void SelectCharacter::Update(float dt, SceneManager& sceneM)
 		Utils::SetOrigin(playerTurnText, Origins::TL);
 		playerTurnText.setPosition(100.f, 60.f);
 	}
-
-	
-	if (InputMgr2::GetKeyDown(sf::Keyboard::Return))
-	{
-		sceneM.SetScene(SceneType::Play);
-	}
-
-	
 }
 
 void SelectCharacter::Draw(sf::RenderWindow& window)

@@ -27,7 +27,7 @@ void SceneManager::Init()
 	characterIndex = 0;
 	for (auto& it : scene)
 	{
-		it->Init();
+		it->Init(*this);
 	}
 }
 
@@ -52,7 +52,7 @@ void SceneManager::Draw(sf::RenderWindow& window)
 void SceneManager::SetScene(SceneType type)
 {
 	currentScene = type;
-	scene[(int)currentScene]->Init();
+	scene[(int)currentScene]->Init(*this);
 }
 
 int SceneManager::GetModeIndex()
@@ -73,4 +73,24 @@ int SceneManager::GetCharacterIndex()
 void SceneManager::SetCharacterIndex(int index)
 {
 	characterIndex = index;
+}
+
+sf::Sprite SceneManager::GetPlayer1()
+{
+	return player1;
+}
+
+void SceneManager::SetPlayer1(sf::Sprite sprite)
+{
+	player1 = sprite;
+}
+
+sf::Sprite SceneManager::GetPlayer2()
+{
+	return player2;
+}
+
+void SceneManager::SetPlayer2(sf::Sprite sprite)
+{
+	player2 = sprite;
 }

@@ -31,13 +31,16 @@ private:
 	sf::Text playerTurnText;
 
 	int playerTurn;		// 0 일때 플레이어1, 1일때 플레이어2
+	int gameMode;
 	int characterIndex;		// 0 일때 왼쪽 , 1일때 오른쪽
+	bool isPick1;
+	bool isPick2;
 
 public:
 	SelectCharacter(SceneType _type);
 	virtual ~SelectCharacter();
 
-	virtual void Init() override;
+	virtual void Init(SceneManager& sceneM) override;
 	virtual void Release() override;
 	virtual void Update(float dt, SceneManager& sceneM) override;
 	virtual void Draw(sf::RenderWindow& window) override;

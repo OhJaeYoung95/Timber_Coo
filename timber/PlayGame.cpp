@@ -8,10 +8,12 @@ PlayGame::~PlayGame()
 {
 }
 
-void PlayGame::Init()
+void PlayGame::Init(SceneManager& sceneM)
 {
 	modeIndex = 0;
 	characterIndex = 0;
+	modeIndex = sceneM.GetModeIndex();
+	characterIndex = sceneM.GetCharacterIndex();
 }
 
 void PlayGame::Release()

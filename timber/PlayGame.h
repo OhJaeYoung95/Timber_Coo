@@ -14,7 +14,7 @@ public:
 	PlayGame(SceneType _type);
 	virtual ~PlayGame() override;
 
-	virtual void Init() override;
+	virtual void Init(SceneManager& sceneM) override;
 	virtual void Release() override;
 	virtual void Update(float dt, SceneManager& sceneM) override;
 	virtual void Draw(sf::RenderWindow& window) override;
