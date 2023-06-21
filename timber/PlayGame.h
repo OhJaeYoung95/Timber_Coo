@@ -15,7 +15,7 @@ protected:
 	ModeSelect mode;
 	//int slotIndex;
 
-	// 게임 상태
+	// 게임 상태 변수
 	bool isPause;
 	bool isStart;
 	bool isTimeOut;

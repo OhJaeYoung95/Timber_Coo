@@ -319,10 +319,10 @@ int main1()
 
 int main()
 {
-    //PlayGame playgame(ModeSelect::Solo);
-    //playgame.SoloPlay();
-    PlayGame playgame(ModeSelect::Multi);
-    playgame.MultiPlay();
+    PlayGame playgame(ModeSelect::Solo);
+    playgame.SoloPlay();
+    //PlayGame playgame(ModeSelect::Multi);
+    //playgame.MultiPlay();
 
     return 0;
 }

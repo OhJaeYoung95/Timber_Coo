@@ -134,22 +134,12 @@ void PlayGame::Init(ModeSelect mode)
     dt = clock.restart();
     deltaTime = dt.asSeconds();
     
-    for (auto& obj : gameObjects)
-    {
-        obj->Init();
-    }
 
-    for (auto& it : tree)
-    {
-        it->Init();
-    }
 
-    for (auto& it : player)
-    {
-        it->Init();
-    }
-    player[0]->SetWho(1);
-    player[1]->SetWho(2);
+    //for (auto& it : tree)
+    //{
+    //    it->Init();
+    //}
     
     if (mode == ModeSelect::Multi)
         {
@@ -161,11 +151,28 @@ void PlayGame::Init(ModeSelect mode)
             uiTimer1.setPosition(screenWidth / 4.f * 3.f, screenHeight - 50.f);
             uiTimerFrame1.setPosition(screenWidth / 4.f * 3.f, screenHeight - 50.f);
         }
+    for (auto& obj : gameObjects)
+    {
+        obj->Init();
+    }
+    
+    tree[0]->Init();
+    tree[1]->Init();
+
+    for (auto& it : player)
+    {
+        it->Init();
+    }
+    player[0]->SetWho(1);
+    player[1]->SetWho(2);
+
+
 }
 
 void PlayGame::SoloPlay()
 {
     Init(ModeSelect::Solo);
+    textBestScore.setString("");
 
     while (window.isOpen())
     {
@@ -265,6 +272,7 @@ void PlayGame::SoloPlay()
             else if (InputMgr2::GetKeyDown(sf::Keyboard::Return) && isStart)
             {
                 Init(ModeSelect::Solo);
+                textBestScore.setString("");
             }
         }
         window.clear();
@@ -276,6 +284,8 @@ void PlayGame::SoloPlay()
 void PlayGame::MultiPlay()
 {
     Init(ModeSelect::Multi);
+    textBestScore.setString("");
+
     while (window.isOpen())
     {
         //InputMgr::Clear();
@@ -303,6 +313,7 @@ void PlayGame::MultiPlay()
         // 타이머
         if (!isPause)   // 게임중일때
         {
+            // 타임아웃의 경우
             timer1 -= deltaTime;
             timer2 -= deltaTime;
             if (timer1 <= 0.f)
@@ -316,103 +327,119 @@ void PlayGame::MultiPlay()
                 if (score1 > bestScore)
                     bestScore = score1;
             }
+
             if (timer2 <= 0.f)
             {
                 timer2 = 0;
                 textMessage.setCharacterSize(40);
-                textMessage.setPosition(screenWidth / 4.f*3.f, screenHeight / 2.f);
+                textMessage.setPosition(screenWidth / 4.f * 3.f, screenHeight / 2.f);
                 textMessage.setString("OUT OF TIME");
                 Utils::SetOrigin(textMessage, Origins::MC);
                 player[1]->Die(isTimeOut);
                 if (score2 > bestScore)
                     bestScore = score2;
             }
-            if(timer1 <= 0.f && timer2 <= 0.f)
+
+            //if(timer1 <= 0.f && timer2 <= 0.f)
+            //{
+            //    isPause = true;
+            //    isTimeOut = true;
+            //    std::stringstream ss1;
+            //    ss1 << "BEST SCORE: " << bestScore;
+            //    textBestScore.setString(ss1.str());
+            //}
+
+            // 충돌 시
+            if (player[0]->GetSide() == tree[0]->GetCurrentSide())
             {
+                timer1 = 0;
+                player[0]->Die(isTimeOut);
+
+                if (score1 > bestScore)
+                    bestScore = score1;
+            }
+
+            if (player[1]->GetSide() == tree[1]->GetCurrentSide())
+            {
+                timer2 = 0;
+                player[1]->Die(isTimeOut);
+
+                if (score2 > bestScore)
+                    bestScore = score2;
+            }
+
+            // 둘 다 죽은 경우
+            if (player[0]->IsAlive() == false && player[1]->IsAlive() == false)
+            {
+                timer1 = 0;
+                timer2 = 0;
                 isPause = true;
+                textMessage.setCharacterSize(75);
+                textMessage.setPosition(screenWidth / 2.f, screenHeight / 2.f);
+                textMessage.setString("Game Over");
                 std::stringstream ss1;
                 ss1 << "BEST SCORE: " << bestScore;
                 textBestScore.setString(ss1.str());
-                isTimeOut = true;
             }
-            else // 타임아웃 아닐 때
+
+            // 둘 다 죽은 경우
+            if (player[0]->IsAlive() == true || player[1]->IsAlive() == true)
             {
-                if (player[0]->GetSide() == tree[0]->GetCurrentSide())
+                if ((InputMgr2::GetKeyDown(sf::Keyboard::Left) ||
+                    InputMgr2::GetKeyDown(sf::Keyboard::Right)) && timer1 <= 5.8f)
                 {
-                    player[0]->Die(isTimeOut);
-
-                    if (score1 > bestScore)
-                        bestScore = score1;
-                }
-                if (player[1]->GetSide() == tree[1]->GetCurrentSide())
-                {
-                    player[1]->Die(isTimeOut);
-
-                    if (score2 > bestScore)
-                        bestScore = score2;
-                }
-                if (player[0]->IsAlive() == false && player[1]->IsAlive() == false)
-                {
-                    isPause = true;
-                    textMessage.setCharacterSize(75);
-                    textMessage.setPosition(screenWidth / 2.f, screenHeight / 2.f);
-                    textMessage.setString("Game Over");
-                    std::stringstream ss1;
-                    ss1 << "BEST SCORE: " << bestScore;
-                    textBestScore.setString(ss1.str());
-                }
-                else // 충돌 아닐 때
-                {
-                    if ((InputMgr2::GetKeyDown(sf::Keyboard::Left) ||
-                        InputMgr2::GetKeyDown(sf::Keyboard::Right)) && timer1 <= 5.8f)
+                    std::cout << tree[0]->GetCurrentint() << std::endl;
+                    if (player[0]->IsAlive() == true)
                     {
-                        std::cout << tree[0]->GetCurrentint() << std::endl;
                         timer1 += 0.3f;
                         score1 += 1;
                     }
-                    if ((InputMgr2::GetKeyDown(sf::Keyboard::A) ||
-                        InputMgr2::GetKeyDown(sf::Keyboard::B)) && timer2 <= 5.8f)
+                }
+
+                if ((InputMgr2::GetKeyDown(sf::Keyboard::A) ||
+                    InputMgr2::GetKeyDown(sf::Keyboard::D)) && timer2 <= 5.8f)
+                {
+                    std::cout << tree[1]->GetCurrentint() << std::endl;
+                    if (player[1]->IsAlive() == true)
                     {
-                        std::cout << tree[1]->GetCurrentint() << std::endl;
                         timer2 += 0.3f;
                         score2 += 1;
                     }
-
-                    // 정규화 퍼센트 단위로 만들어서 타이머의 시간을 통해 타이머
-                    float normTime1 = timer1 / duration;
-                    float timeSizeX1 = uiTimerWidth * normTime1;
-
-                    float normTime2 = timer2 / duration;
-                    float timeSizeX2 = uiTimerWidth * normTime2;
-
-                    uiTimer1.setSize(sf::Vector2f(timeSizeX1, uiTimerheight));
-                    uiTimer2.setSize(sf::Vector2f(timeSizeX2, uiTimerheight));
-
-                    for (auto& obj : gameObjects)
-                    {
-                        obj->Update(deltaTime);
-                    }
-
-                    for (auto& it : tree)
-                    {
-                        it->Update(deltaTime);
-                    }
-
-                    for (auto& it : player)
-                    {
-                        it->Update(deltaTime);
-                    }
-
-                    std::stringstream ss1;
-                    ss1 << "SCORE: " << score1;
-                    textScore1.setString(ss1.str());
-
-                    std::stringstream ss2;
-                    ss2 << "SCORE: " << score2;
-                    textScore2.setString(ss2.str());
                 }
-            }
 
+                // 정규화 퍼센트 단위로 만들어서 타이머의 시간을 통해 타이머
+                float normTime1 = timer1 / duration;
+                float timeSizeX1 = uiTimerWidth * normTime1;
+
+                float normTime2 = timer2 / duration;
+                float timeSizeX2 = uiTimerWidth * normTime2;
+
+                uiTimer1.setSize(sf::Vector2f(timeSizeX1, uiTimerheight));
+                uiTimer2.setSize(sf::Vector2f(timeSizeX2, uiTimerheight));
+
+                for (auto& obj : gameObjects)
+                {
+                    obj->Update(deltaTime);
+                }
+
+                for (auto& it : tree)
+                {
+                    it->Update(deltaTime);
+                }
+
+                for (auto& it : player)
+                {
+                    it->Update(deltaTime);
+                }
+
+                std::stringstream ss1;
+                ss1 << "SCORE: " << score1;
+                textScore1.setString(ss1.str());
+
+                std::stringstream ss2;
+                ss2 << "SCORE: " << score2;
+                textScore2.setString(ss2.str());
+            }
         }
         else // 멈췄을 때
         {
@@ -429,6 +456,7 @@ void PlayGame::MultiPlay()
             else if (InputMgr2::GetKeyDown(sf::Keyboard::Return) && isStart)
             {
                 Init(ModeSelect::Multi);
+                textBestScore.setString("");
             }
         }
         window.clear();

@@ -22,7 +22,7 @@ Tree::Tree(std::vector<GameObject*>& games, sf::Texture& tex, sf::Vector2f sprit
 		branchList[i]->SetTree(this);
 		Sides side = (Sides)Utils::RandomRange(0, 2);
 		branchList[i]->SetSide(side);
-		/*this->gameObjectList.push_back(branchList[i]);*/
+		this->gameObjectList.push_back(branchList[i]);
 	}
 	offsetY = branchList[0]->GetSize().y + 100.f;
 	xPos = GetPosition().x;
