@@ -7,7 +7,6 @@ Player::Player(sf::Texture& tex, sf::Vector2f spriteDir, const std::string& n, c
 {
 	texAxe.loadFromFile("graphics/axe.png");
 	axe = new SpriteGo(texAxe);
-	texplayer2.loadFromFile("graphics/player2.png");
 
 
 	SetOrigin(Origins::BC);
@@ -23,6 +22,15 @@ Player::Player(sf::Texture& tex, sf::Vector2f spriteDir, const std::string& n, c
 
 	texRip.loadFromFile("graphics/rip.png");
 
+	soundBufferChop.loadFromFile("sound/chop.wav");
+	soundBufferDeath.loadFromFile("sound/death.wav");
+	soundBufferOutOfTime.loadFromFile("sound/out_of_time.wav");
+
+	soundChop.setBuffer(soundBufferChop);
+	soundDeath.setBuffer(soundBufferDeath);
+	soundOutOfTime.setBuffer(soundBufferDeath);
+
+	who = 1;
 }
 
 Player::~Player()
@@ -42,15 +50,14 @@ void Player::SetSide(Sides side)
 	SetPosition(playerPositions[(int)this->side]);
 	SetFlipX(this->side == Sides::Left);
 
-	// ±³¼ö´Ô ÄÚµå
+
 	axe->SetPosition(GetPosition());
 	axe->SetFlipX(this->side == Sides::Left);
+}
 
-	// axe
-	//axePositions[(int)Sides::Left] = sf::Vector2f(this->GetPosition().x - axeOffsetX, this->GetPosition().y - axeOffsetY);
-	//axePositions[(int)Sides::Right] = sf::Vector2f(this->GetPosition().x + axeOffsetX, this->GetPosition().y - axeOffsetY);
-	//axe->SetPosition(axePositions[(int)this->side]);
-	//axe->SetFlipX(this->side != Sides::Right);
+void Player::SetWho(int who)
+{
+	this->who = who;
 }
 
 Sides Player::GetSide() const
@@ -66,9 +73,10 @@ void Player::Chop(Sides side)
 	Sides effectSide = (Sides)(((int)side + 1) % 2);
 	tree->ShowEffectLog(effectSide, pos);
 	isChopping = true;
+	soundChop.play();
 }
 
-void Player::Die()
+void Player::Die(bool isTimeOut)
 {
 	isAlive = false;
 	isChopping = false;
@@ -76,12 +84,15 @@ void Player::Die()
 	SetTexture(texRip);
 	SetOrigin(Origins::BC);
 	SetFlipX(true);
+	if (isTimeOut)
+		soundOutOfTime.play();
+	else
+		soundDeath.play();
+}
 
-	//if (isTimeOut)
-	//	soundOutOfTime.play();
-	//else
-	//	soundDeath.play();
-
+bool Player::IsAlive()
+{
+	return isAlive;
 }
 
 void Player::SetPosition(float x, float y)
@@ -101,13 +112,7 @@ void Player::SetOrigin(Origins origin)
 
 void Player::Init()
 {
-	//playerchoise->CharacterChoise();
 	isAlive = true;
-	//if(playerchoise->GetselectedCharacter() == 0)
-		SetTexture(texPlayer);
-	//if (playerchoise->GetselectedCharacter() == 1)
-		//SetTexture(texplayer2);
-
 	SetOrigin(Origins::BC);
 
 	isChopping = false;
@@ -148,33 +153,69 @@ void Player::Update(float dt)
 		return;
 	if (!isChopping)
 	{
-		if (InputMgr2::GetKeyDown(sf::Keyboard::Left))
+		if (who == 1)
 		{
-			tree->UpdateBranches();
-			tree->GetCurrentint();
-			Chop(Sides::Left);
-		}
+			if (InputMgr2::GetKeyDown(sf::Keyboard::Left))
+			{
+				tree->UpdateBranches();
+				tree->GetCurrentint();
+				Chop(Sides::Left);
+			}
 
-		if (InputMgr2::GetKeyDown(sf::Keyboard::Right))
+			if (InputMgr2::GetKeyDown(sf::Keyboard::Right))
+			{
+				tree->UpdateBranches();
+				tree->GetCurrentint();
+				Chop(Sides::Right);
+			}		
+		}
+		else if (who == 2)
 		{
-			tree->UpdateBranches();
-			tree->GetCurrentint();
-			Chop(Sides::Right);
-		}
+			if (InputMgr2::GetKeyDown(sf::Keyboard::A))
+			{
+				tree->UpdateBranches();
+				tree->GetCurrentint();
+				Chop(Sides::Left);
+			}
 
+			if (InputMgr2::GetKeyDown(sf::Keyboard::D))
+			{
+				tree->UpdateBranches();
+				tree->GetCurrentint();
+				Chop(Sides::Right);
+			}
+		}
 	}
 	else
 	{
-		if (GetSide() == Sides::Left && 
-			InputMgr2::GetKeyUp(sf::Keyboard::Left))
+		if (who == 1)
 		{
-			isChopping = false;
-		}
+			if (GetSide() == Sides::Left && 
+				InputMgr2::GetKeyUp(sf::Keyboard::Left))
+			{
+				isChopping = false;
+			}
 
-		if (GetSide() == Sides::Right && 
-			InputMgr2::GetKeyUp(sf::Keyboard::Right))
+			if (GetSide() == Sides::Right && 
+				InputMgr2::GetKeyUp(sf::Keyboard::Right))
+			{
+				isChopping = false;
+			}
+		}
+		else if (who == 2)
 		{
-			isChopping = false;
+			if (GetSide() == Sides::Left &&
+				InputMgr2::GetKeyUp(sf::Keyboard::A))
+			{
+				isChopping = false;
+			}
+
+			if (GetSide() == Sides::Right &&
+				InputMgr2::GetKeyUp(sf::Keyboard::D))
+			{
+				isChopping = false;
+			}
+
 		}
 
 	}

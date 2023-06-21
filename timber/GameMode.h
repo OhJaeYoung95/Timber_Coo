@@ -7,7 +7,6 @@ class SceneManager;
 class GameMode : public Scene
 {
 private:
-
 	sf::Texture bgTex;
 	sf::Sprite bg;
 
@@ -27,7 +26,7 @@ public:
 	GameMode(SceneType _type);
 	virtual ~GameMode() override;
 
-	virtual void Init(SceneManager& sceneM) override;
+	virtual void Init(ModeSelect mode, SceneManager& sceneM) override;
 	virtual void Release() override;
 	virtual void Update(float dt, SceneManager& sceneM) override;
 	virtual void Draw(sf::RenderWindow& window) override;

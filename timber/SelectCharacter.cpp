@@ -7,6 +7,9 @@ SelectCharacter::SelectCharacter(SceneType _type)
 	: Scene(_type) , playerTurn(0), characterIndex(1),
 	isPick1(false), isPick2(false), gameMode(0)
 {
+	strC1 = "graphics/player.png";
+	strC2 = "graphics/player2.png";
+
 	bgTex.loadFromFile("graphics/back2.png");
 	SetTexture(bg, bgTex);
 
@@ -37,7 +40,7 @@ SelectCharacter::~SelectCharacter()
 
 }
 
-void SelectCharacter::Init(SceneManager& sceneM)
+void SelectCharacter::Init(ModeSelect mode, SceneManager& sceneM)
 {
 	playerTurn = 0;
 	characterIndex = 0;
@@ -64,7 +67,7 @@ void SelectCharacter::Init(SceneManager& sceneM)
 	Utils::SetOrigin(frame1, Origins::MC);
 
 	c2.setPosition(1400.f, 1080.f / 2.f + 100.f);
-	c2.setScale(0.22f, 0.22f);
+	c2.setScale(1.0f, 1.0f);
 	Utils::SetOrigin(c2, Origins::MC);
 	frame2.setPosition(1400.f, 1080.f / 2.f + 100.f);
 	frame2.setScale(0.5f, 0.5f);
@@ -101,21 +104,20 @@ void SelectCharacter::Update(float dt, SceneManager& sceneM)
 
 	if (InputMgr2::GetKeyDown(sf::Keyboard::Enter))
 	{
-		// bool Texture  bool 2r개중 하나가 값이 변해 
 		if (playerTurn == 0 && !isPick1)
 		{
 			if(characterIndex == 0)
-				sceneM.SetPlayer1(c1);
+				sceneM.SetPlayer1(strC1);
 			else if(characterIndex == 1)
-				sceneM.SetPlayer1(c2);
+				sceneM.SetPlayer1(strC2);
 			isPick1 = true;
 		}
 		else if (playerTurn == 1 && !isPick2 && gameMode != 0)
 		{
 			if (characterIndex == 0)
-				sceneM.SetPlayer2(c1);
+				sceneM.SetPlayer2(strC1);
 			else if (characterIndex == 1)
-				sceneM.SetPlayer2(c2);
+				sceneM.SetPlayer2(strC2);
 			isPick2 = true;
 		}
 

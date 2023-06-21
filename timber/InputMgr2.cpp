@@ -31,7 +31,6 @@ void InputMgr2::UpdateInput(const sf::Event& ev)
         ingList[ev.key.code] = false;
         upList[ev.key.code] = true;
         break;
-
     }
 }
 

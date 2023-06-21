@@ -21,7 +21,7 @@ GameMode::~GameMode()
 {
 }
 
-void GameMode::Init(SceneManager& sceneM)
+void GameMode::Init(ModeSelect mode, SceneManager& sceneM)
 {
 	modeIndex = 0;
 	sceneM.SetModeIndex(modeIndex);
@@ -42,8 +42,6 @@ void GameMode::Init(SceneManager& sceneM)
 	text1.setFillColor(sf::Color::Blue);
 	Utils::SetOrigin(text1, Origins::MC);
 	text1.setPosition(500.f, 1080.f / 2.f + 300.f);
-
-
 
 	text2.setFont(font);
 	text2.setString("\"FOR TWO PERSON\"");

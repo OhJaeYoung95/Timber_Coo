@@ -20,6 +20,8 @@ public:
 	virtual void SetOrigin(Origins origin) override;
 	virtual void SetOrigin(float x, float y) override;
 
+
+	void SetSize(float x, float y);
 	sf::Vector2f GetSize() const;
 
 	void SetTexture(sf::Texture& tex, sf::Vector2f spriteDir = sf::Vector2f(-1.f, 0.f));

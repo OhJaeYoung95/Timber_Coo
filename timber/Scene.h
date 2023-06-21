@@ -12,7 +12,7 @@ public:
 	Scene(SceneType _type);
 	virtual ~Scene();
 
-	virtual void Init(SceneManager& sceneM) = 0;
+	virtual void Init(ModeSelect mode, SceneManager& sceneM) = 0;
 	virtual void Release() = 0;
 	virtual void Update(float dt, SceneManager& sceneM) = 0;
 	virtual void Draw(sf::RenderWindow& window) = 0;

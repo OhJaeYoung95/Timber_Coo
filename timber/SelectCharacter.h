@@ -26,6 +26,10 @@ private:
 	sf::Texture c2CursorTex;
 	sf::Sprite c2Cursor;
 
+	// 캐릭터 스트링으로 넘기기
+	std::string strC1;
+	std::string strC2;
+
 	// 캐릭터 차례
 	sf::Font font;
 	sf::Text playerTurnText;
@@ -40,7 +44,7 @@ public:
 	SelectCharacter(SceneType _type);
 	virtual ~SelectCharacter();
 
-	virtual void Init(SceneManager& sceneM) override;
+	virtual void Init(ModeSelect mode, SceneManager& sceneM) override;
 	virtual void Release() override;
 	virtual void Update(float dt, SceneManager& sceneM) override;
 	virtual void Draw(sf::RenderWindow& window) override;

@@ -26,3 +26,9 @@ enum class Origins	// ÇÇ¹þ
 	BC,
 	BR
 };
+
+enum class ModeSelect
+{
+	Solo,
+	Multi
+};

@@ -10,7 +10,7 @@ SceneManager::SceneManager()
 	scene.push_back(new Title(SceneType::Title));
 	scene.push_back(new GameMode(SceneType::GameMode));
 	scene.push_back(new SelectCharacter(SceneType::Select));
-	scene.push_back(new PlayGame(SceneType::Play));
+	scene.push_back(new PlayGame(*this, SceneType::Play));
 }
 
 SceneManager::~SceneManager()
@@ -27,7 +27,7 @@ void SceneManager::Init()
 	characterIndex = 0;
 	for (auto& it : scene)
 	{
-		it->Init(*this);
+		it->Init((ModeSelect)modeIndex, *this);
 	}
 }
 
@@ -52,7 +52,7 @@ void SceneManager::Draw(sf::RenderWindow& window)
 void SceneManager::SetScene(SceneType type)
 {
 	currentScene = type;
-	scene[(int)currentScene]->Init(*this);
+	scene[(int)currentScene]->Init((ModeSelect)modeIndex, *this);
 }
 
 int SceneManager::GetModeIndex()
@@ -75,22 +75,22 @@ void SceneManager::SetCharacterIndex(int index)
 	characterIndex = index;
 }
 
-sf::Sprite SceneManager::GetPlayer1()
+std::string& SceneManager::GetPlayer1()
 {
 	return player1;
 }
 
-void SceneManager::SetPlayer1(sf::Sprite sprite)
+void SceneManager::SetPlayer1(std::string& str)
 {
-	player1 = sprite;
+	player1 = str;
 }
 
-sf::Sprite SceneManager::GetPlayer2()
+std::string& SceneManager::GetPlayer2()
 {
 	return player2;
 }
 
-void SceneManager::SetPlayer2(sf::Sprite sprite)
+void SceneManager::SetPlayer2(std::string& str)
 {
-	player2 = sprite;
+	player2 = str;
 }

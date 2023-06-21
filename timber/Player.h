@@ -1,4 +1,5 @@
 #pragma once
+#include <SFML/Audio.hpp>
 #include "SpriteGo.h"
 #include "Defines.h"
 #include "PlayerChoise.h"
@@ -12,11 +13,12 @@ protected:
 	Sides side;
 
 	sf::Texture texAxe;
-	sf::Texture texplayer2;
 
 	SpriteGo* axe;
 	float axeOffsetY;
 	float axeOffsetX;
+
+	int who;
 
 	float offsetX;
 	sf::Vector2f playerPositions[2];
@@ -29,6 +31,16 @@ protected:
 
 	sf::Texture texRip;
 	sf::Texture& texPlayer;
+	//sf::Texture& texplayer2;
+
+	//Sound
+	sf::SoundBuffer soundBufferChop;
+	sf::SoundBuffer soundBufferDeath;
+	sf::SoundBuffer soundBufferOutOfTime;
+
+	sf::Sound soundChop;
+	sf::Sound soundDeath;
+	sf::Sound soundOutOfTime;
 
 public:
 	Player(sf::Texture& tex,
@@ -39,11 +51,12 @@ public:
 
 	void SetTree(Tree* tree);
 	void SetSide(Sides side);
+	void SetWho(int who);
 	Sides GetSide() const;
 	void Chop(Sides side);
-	void Die();
+	void Die(bool isTimeOut);
 
-	//bool IsAlive();
+	bool IsAlive();
 	//bool CheckCollide();
 
 	virtual void SetPosition(float x, float y);

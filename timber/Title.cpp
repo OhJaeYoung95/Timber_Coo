@@ -13,7 +13,7 @@ Title::~Title()
 {
 }
 
-void Title::Init(SceneManager& sceneM)
+void Title::Init(ModeSelect mode, SceneManager& sceneM)
 {
 	// 타이틀 이미지
 	title.setPosition(0.f, 0.f);

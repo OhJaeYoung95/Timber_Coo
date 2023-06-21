@@ -28,14 +28,14 @@ void MovingBgObj::Init()
 		originalPos = leftPos + randomPos;
 		SetPosition(originalPos);
 		direction = sf::Vector2f(1.f, 0.f);
-		SetFlipX(spriteDir.x > 0);
+		SetFlipX(spriteDir.x < 0);
 	}
 	else
 	{
 		originalPos = rightPos + randomPos;
 		SetPosition(originalPos);
 		direction = sf::Vector2f(-1.f, 0.f);
-		SetFlipX(spriteDir.x < 0);
+		SetFlipX(spriteDir.x > 0);
 	}
 }
 

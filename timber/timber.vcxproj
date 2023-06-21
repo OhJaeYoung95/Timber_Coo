@@ -159,7 +159,10 @@
     <ClCompile Include="InputMgr2.cpp" />
     <ClCompile Include="MovingBgObj.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayGame.cpp" />
+    <ClCompile Include="PlayerChoise.cpp" />
+    <ClCompile Include="PlayGame.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SelectCharacter.cpp" />
@@ -179,7 +182,10 @@
     <ClInclude Include="InputMgr2.h" />
     <ClInclude Include="MovingBgObj.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayGame.h" />
+    <ClInclude Include="PlayerChoise.h" />
+    <ClInclude Include="PlayGame.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SelectCharacter.h" />

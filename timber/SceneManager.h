@@ -23,8 +23,8 @@ private:
 	int modeIndex;		// 1인용 2인용, SelectCharacter 의 playerTurn에도 적용
 	int characterIndex;
 
-	sf::Sprite player1;
-	sf::Sprite player2;
+	std::string player1;
+	std::string player2;
 
 public:
 	SceneManager();
@@ -42,9 +42,9 @@ public:
 	int GetCharacterIndex();
 	void SetCharacterIndex(int index);
 
-	sf::Sprite GetPlayer1();
-	void SetPlayer1(sf::Sprite sprite);
-	sf::Sprite GetPlayer2();
-	void SetPlayer2(sf::Sprite sprite);
+	std::string& GetPlayer1();
+	void SetPlayer1(std::string& str);
+	std::string& GetPlayer2();
+	void SetPlayer2(std::string& str);
 };
 
