@@ -3,7 +3,6 @@
 #include "Defines.h"
 #include <SFML/Audio.hpp>
 
-
 class Tree;
 
 class Player : public SpriteGo
@@ -16,12 +15,13 @@ protected:
 	SpriteGo* axe;
 	float axeOffsetY;
 	float axeOffsetX;
-
+	SpriteGo* arrow;
 	float offsetX;
 	sf::Vector2f playerPositions[2];
 	sf::Vector2f axePositions[2];
 	sf::Vector2f axePosition;
-
+	int selectedCharacter = 0;
+	bool isCharacterSelected;
 	bool isChopping;
 	bool isAlive;
 
@@ -36,6 +36,10 @@ protected:
 	sf::Sound soundChop;
 	sf::Sound soundDeath;
 	sf::Sound soundOutOfTime;
+	sf::Texture texPlayer1;
+	sf::Texture texPlayer2;
+	sf::Texture texchoiseBG;
+	sf::Texture texarrow;
 
 
 public:
@@ -52,6 +56,7 @@ public:
 	void Chop(Sides side);
 	void Die(bool isTimeOut);
 
+	void Choise();
 	//bool IsAlive();
 	//bool CheckCollide();
 
@@ -65,6 +70,6 @@ public:
 
 	virtual void Update(float dt);
 	virtual void Draw(sf::RenderWindow& window);
-
+	
 };
 
