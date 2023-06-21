@@ -75,22 +75,22 @@ void SceneManager::SetCharacterIndex(int index)
 	characterIndex = index;
 }
 
-std::string& SceneManager::GetPlayer1()
+const std::string& SceneManager::GetPlayer1()
 {
 	return player1;
 }
 
-void SceneManager::SetPlayer1(std::string& str)
+void SceneManager::SetPlayer1(const std::string& str)
 {
 	player1 = str;
 }
 
-std::string& SceneManager::GetPlayer2()
+const std::string& SceneManager::GetPlayer2()
 {
 	return player2;
 }
 
-void SceneManager::SetPlayer2(std::string& str)
+void SceneManager::SetPlayer2(const std::string& str)
 {
 	player2 = str;
 }

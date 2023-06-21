@@ -2,19 +2,19 @@
 #include "Tree.h"
 
 PlayGame::PlayGame(SceneManager& _scene, SceneType _type)
-    : Scene(_type), modeIndex(0), characterIndex(0)
-    , scene(_scene)
+    : Scene(_type), modeIndex(0), characterIndex(0), scene(_scene)
 {
+    SetScene(_scene);
+
     // texture 불러오기
     font.loadFromFile("fonts/KOMIKAP_.ttf");
     texBackground.loadFromFile("graphics/background.png");
     texTree.loadFromFile("graphics/tree.png");
     texCloud.loadFromFile("graphics/cloud.png");
     texBee.loadFromFile("graphics/bee.png");
-    
 
     texPlayer1.loadFromFile("graphics/player.png");
-    texPlayer2.loadFromFile("graphics/player2.png");
+    texPlayer2.loadFromFile("graphics/player.png");
 
     // 배경 생성
     gameObjects.push_back(new SpriteGo(texBackground, sf::Vector2f(1.f, 0.f), "BG", { 0, 0 }));
@@ -45,9 +45,6 @@ PlayGame::PlayGame(SceneManager& _scene, SceneType _type)
         tree.push_back(new Tree(gameObjects, texTree, sf::Vector2f(1.f, 0.f), "Tree"));
         tree[i]->SetOrigin(Origins::TC);
     }
-    // 캐릭터 이미지
-    //texPlayer1.loadFromFile(scene.GetPlayer1());
-    //texPlayer2.loadFromFile(scene.GetPlayer2());
 
     // 플레이어 생성
     player.push_back(new Player(texPlayer1, sf::Vector2f(-1.f, -1.f), "P1", sf::Vector2f(0.f, 880.f)));
@@ -65,6 +62,7 @@ PlayGame::~PlayGame()
 
 void PlayGame::Init(ModeSelect mode, SceneManager& sceneM)
 {
+    // 
     texPlayer1.loadFromFile(sceneM.GetPlayer1());
     texPlayer2.loadFromFile(sceneM.GetPlayer2());
 
@@ -162,27 +160,35 @@ void PlayGame::Init(ModeSelect mode, SceneManager& sceneM)
     tree[0]->Init();
     tree[1]->Init();
 
-    //
     player[0]->SetTree(tree[0]);
     player[1]->SetTree(tree[1]);
 
     player[0]->SetWho(1);
     player[1]->SetWho(2);
 
-    player[0]->SetTexture(texPlayer1);
-    player[1]->SetTexture(texPlayer2);
 
     for (auto& it : player)
     {
         it->Init();
     }
-    //
+    
+    player[0]->SetTexture(texPlayer1);
+    player[1]->SetTexture(texPlayer2);
 
 
     if (modeP == ModeSelect::Solo)
     {
         player[1]->SetActive(false);
         tree[1]->SetActive(false);
+    }
+
+    if (texPlayer1.getSize() != sf::Vector2u(0, 0))
+    {
+        std::cout << "성공";
+    }
+    else
+    {
+        std::cout << "실패";
     }
 
 }
@@ -227,6 +233,11 @@ void PlayGame::Draw(sf::RenderWindow& window)
         window.draw(textMessage);
         window.draw(textBestScore);
     }
+}
+
+void PlayGame::SetScene(SceneManager& sceneM)
+{
+    this->scene = sceneM;
 }
 
 void PlayGame::Release()

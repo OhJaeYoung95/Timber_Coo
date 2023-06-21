@@ -42,9 +42,9 @@ public:
 	int GetCharacterIndex();
 	void SetCharacterIndex(int index);
 
-	std::string& GetPlayer1();
-	void SetPlayer1(std::string& str);
-	std::string& GetPlayer2();
-	void SetPlayer2(std::string& str);
+	const std::string& GetPlayer1();
+	void SetPlayer1(const std::string& str);
+	const std::string& GetPlayer2();
+	void SetPlayer2(const std::string& str);
 };
 

@@ -78,7 +78,6 @@ public:
 	virtual void Update(float dt, SceneManager& sceneM) override;
 	virtual void Draw(sf::RenderWindow& window) override;
 
-	void SoloPlay(SceneManager& sceneM);
-	void MultiPlay(SceneManager& sceneM);
+	void SetScene(SceneManager& sceneM);
 
 };
