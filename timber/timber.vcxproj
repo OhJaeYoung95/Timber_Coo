@@ -153,14 +153,19 @@
   <ItemGroup>
     <ClCompile Include="Branch.cpp" />
     <ClCompile Include="EffectGo.cpp" />
+    <ClCompile Include="GameMode.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InputMgr.cpp" />
     <ClCompile Include="InputMgr2.cpp" />
     <ClCompile Include="MovingBgObj.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerChoise.cpp" />
+    <ClCompile Include="PlayGame.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SelectCharacter.cpp" />
     <ClCompile Include="SpriteGo.cpp" />
     <ClCompile Include="timber.cpp" />
+    <ClCompile Include="Title.cpp" />
     <ClCompile Include="Tree.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
@@ -168,13 +173,18 @@
     <ClInclude Include="Branch.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="EffectGo.h" />
+    <ClInclude Include="GameMode.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InputMgr.h" />
     <ClInclude Include="InputMgr2.h" />
     <ClInclude Include="MovingBgObj.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerChoise.h" />
+    <ClInclude Include="PlayGame.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="SelectCharacter.h" />
     <ClInclude Include="SpriteGo.h" />
+    <ClInclude Include="Title.h" />
     <ClInclude Include="Tree.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
