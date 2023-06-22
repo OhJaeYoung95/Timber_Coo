@@ -257,7 +257,7 @@ void PlayGame::Release()
 
 void PlayGame::Update(float dt, SceneManager& sceneM)
 {
-	if (InputMgr2::GetKeyDown(sf::Keyboard::Enter))
+	if (InputMgr2::GetKeyDown(sf::Keyboard::Enter)&& isPause)
 	{
 		sceneM.SetScene(SceneType::Play);
 	}
