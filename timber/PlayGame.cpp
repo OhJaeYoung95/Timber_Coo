@@ -292,6 +292,7 @@ void PlayGame::Update(float dt, SceneManager& sceneM)
                 std::stringstream ss1;
                 ss1 << "BEST SCORE: " << bestScore;
                 textBestScore.setString(ss1.str());
+                isTimeOut = false;
             }
             else if (player[0]->GetSide() == tree[0]->GetCurrentSide())
             {
@@ -307,6 +308,7 @@ void PlayGame::Update(float dt, SceneManager& sceneM)
                 std::stringstream ss1;
                 ss1 << "BEST SCORE: " << bestScore;
                 textBestScore.setString(ss1.str());
+                isTimeOut = false;
             }
             else
             {

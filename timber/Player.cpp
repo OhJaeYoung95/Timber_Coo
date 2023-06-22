@@ -28,7 +28,7 @@ Player::Player(sf::Texture& tex, sf::Vector2f spriteDir, const std::string& n, c
 
 	soundChop.setBuffer(soundBufferChop);
 	soundDeath.setBuffer(soundBufferDeath);
-	soundOutOfTime.setBuffer(soundBufferDeath);
+	soundOutOfTime.setBuffer(soundBufferOutOfTime);
 
 	who = 1;
 }
