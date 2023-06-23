@@ -2,7 +2,6 @@
 #include <SFML/Audio.hpp>
 #include "SpriteGo.h"
 #include "Defines.h"
-#include "PlayerChoise.h"
 
 class Tree;
 
@@ -24,7 +23,6 @@ protected:
 	sf::Vector2f playerPositions[2];
 	sf::Vector2f axePositions[2];
 	sf::Vector2f axePosition;
-	PlayerChoise* playerchoise;
 
 	bool isChopping;
 	bool isAlive;
