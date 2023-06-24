@@ -2,7 +2,7 @@
 
 EffectGo::EffectGo(sf::Texture& tex, sf::Vector2f spriteDir, const std::string& n, const sf::Vector2f p) :SpriteGo(tex, spriteDir, n,p), gravity(0.f, 2000.f), duration(3.f), timer(0.f)
 {
-	SetOrigin(Origins::MC);
+	SetOrigin(Origins::BC);
 }
 
 EffectGo::~EffectGo()
