@@ -54,7 +54,7 @@
     <ClCompile Include="Framework\InputMgr.cpp" />
     <ClCompile Include="Framework\SceneMgr.cpp" />
     <ClCompile Include="Framework\ResourceMgr.cpp" />
-    <ClCompile Include="TextGo.cpp" />
+    <ClCompile Include="GameObject\TextGo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="소스 파일">
@@ -123,6 +123,6 @@
     <ClInclude Include="Framework\InputMgr.h" />
     <ClInclude Include="Framework\SceneMgr.h" />
     <ClInclude Include="Framework\ResourceMgr.h" />
-    <ClInclude Include="TextGo.h" />
+    <ClInclude Include="GameObject\TextGo.h" />
   </ItemGroup>
 </Project>

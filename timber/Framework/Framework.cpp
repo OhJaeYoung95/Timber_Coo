@@ -14,7 +14,6 @@ void Framework::Init(int width, int height, const std::string& title)
     window.create(sf::VideoMode(width, height), title);
 
     RESOURCE_MGR.Load(ResourceTypes::Font, "fonts/KOMIKAP_.ttf");
-
     SCENE_MGR.Init();
 }
 
@@ -68,9 +67,4 @@ void Framework::Run()
 sf::Vector2f Framework::GetWindowSize()
 {
     return sf::Vector2f(screenWidth, screenHeight);
-}
-
-sf::Text Framework::GetText()
-{
-    return text;
 }

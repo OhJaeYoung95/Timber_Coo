@@ -2,18 +2,19 @@
 #include "SceneMgr.h"
 #include "Scene.h"
 #include "Title.h"
+#include "GameMode.h"
 //#include "SceneTitle.h"
 //#include "SceneGame.h"
 
 void SceneMgr::Init()
 {
-	if (scenes.empty())
+	if (!scenes.empty())
 	{
 		Release();
 	}
 
 	scenes.push_back(new Title());
-	//scenes.push_back(new SceneGame());
+	scenes.push_back(new GameMode());
 
 	for (auto scene : scenes)
 	{

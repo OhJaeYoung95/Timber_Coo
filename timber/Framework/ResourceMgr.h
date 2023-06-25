@@ -1,7 +1,7 @@
 #pragma once
 #include "Singleton.h"
 
-class ResourceMgr : public Singleton< ResourceMgr>
+class ResourceMgr : public Singleton<ResourceMgr>
 {
 	friend Singleton<ResourceMgr>;
 

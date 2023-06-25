@@ -20,7 +20,7 @@ private:
 	//sf::Text text1;
 	//sf::Text text2;
 
-	//int modeIndex;
+	int modeIndex;
 
 public:
 	GameMode();

@@ -17,8 +17,6 @@ Title::Title() : Scene(SceneId::Title)
 	//resources.push_back();
 	//RESOURCE_MGR.Load(ResourceTypes::Texture, "graphics/title.png");
 	//RESOURCE_MGR.Load(ResourceTypes::Font, "fonts/KOMIKAP_.ttf");
-	resources.push_back(std::make_tuple(ResourceTypes::Texture, "graphics/title.png"));
-
 }
 
 Title::~Title()
@@ -28,6 +26,8 @@ Title::~Title()
 void Title::Init()
 {
 	Release();
+	resources.push_back(std::make_tuple(ResourceTypes::Texture, "graphics/title.png"));
+	RESOURCE_MGR.Load(resources);
 
 	AddGo(new SpriteGo("BG"));
 	AddGo(new TextGo("Title"));
@@ -53,6 +53,7 @@ void Title::Init()
 
 void Title::Release()
 {
+	RESOURCE_MGR.Unload(ResourceTypes::Texture, "graphics/title.png");
 	for (auto go : gameObjects)
 	{
 		//go->Release();
@@ -70,8 +71,10 @@ void Title::Enter()
 	findGo->SetSize(1, 1);
 	findGo->sortLayer = 0;
 
-	TextGo* textGo = (TextGo*)FindGo("TEXT");
+	TextGo* textGo = (TextGo*)FindGo("Title");
 	textGo->text.setFont(*RESOURCE_MGR.GetFont("fonts/KOMIKAP_.ttf"));
+	textGo->text.setString("\"Press Enter to Start Game\"");
+	textGo->text.setCharacterSize(75);
 	textGo->SetOrigin(Origins::MC);
 	textGo->SetPosition(FRAMEWORK.GetWindowSize().x / 2.f, FRAMEWORK.GetWindowSize().y / 2.f + 300.f);
 	textGo->sortLayer = 1;
@@ -80,8 +83,7 @@ void Title::Enter()
 void Title::Exit()
 {
 	Scene::Exit();
-	//RESOURCE_MGR.Unload(ResourceTypes::Texture, "graphics/title.png");
-	//RESOURCE_MGR.Unload(ResourceTypes::Font, "fonts/KOMIKAP_.ttf");
+	RESOURCE_MGR.Unload(resources);
 }
 
 void Title::Update(float dt)	// 여기서 
@@ -98,10 +100,6 @@ void Title::Update(float dt)	// 여기서
 void Title::Draw(sf::RenderWindow& window)
 {
 	Scene::Draw(window);
-
-	//if (blinkTimer > 0)
-	//	window.draw(text);
-
 }
 
 void Title::SetTexture(sf::Texture& tex)

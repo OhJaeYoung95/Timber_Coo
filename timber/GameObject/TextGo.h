@@ -29,5 +29,6 @@ public:
 	virtual void Draw(sf::RenderWindow& window) override;
 
 	void SetText(const std::string str, int size, sf::Color color, Origins origin, float x, float y);
+	sf::Text GetText();
 };
 

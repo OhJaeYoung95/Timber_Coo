@@ -3,7 +3,7 @@
 #include "GameObject.h"
 #include "ResourceMgr.h"
 
-Scene::Scene(SceneId id) : sceneId(id)
+Scene::Scene(SceneId id) : sceneId(id), blinkTimer(0.5f)
 {
 
 }

@@ -74,3 +74,8 @@ void TextGo::SetText(const std::string str, int size, sf::Color color, Origins o
 	Utils::SetOrigin(text, origin);
 	text.setPosition(x, y);
 }
+
+sf::Text TextGo::GetText()
+{
+	return text;
+}

@@ -17,8 +17,8 @@ protected:
 	int screenHeight = 1080;
 	std::string title = "SFML Works!";
 
-	sf::Font font;
-	sf::Text text;
+	//sf::Font font;
+	//sf::Text text;
 
 public:
 	virtual void Init(int width, int height, const std::string& title);
